@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/css" href="http://www-personal.umich.edu/~pfs/mec/code/med.css"?>
+<!DOCTYPE MED SYSTEM
+        "http://www-personal.umich.edu/~pfs/mec/code/med.xml.dtd">
+<MED>
+  <ENTRYFREE ID="MED47570" SEQ="47569">
+    <FORM>
+      <HDORTH>
+        <REG>ulceratif</REG>
+        <ORIG>ulcer&#x0101;&#x0306;t&#x012B;&#x0306;f</ORIG>
+      </HDORTH>
+      <POS>adj.</POS> Also
+      <ORTH>
+        <REG>ulcerative</REG>
+        <ORIG>ulcerative</ORIG>
+      </ORTH>
+      .
+    </FORM>
+    <ETYM>
+      <LANG>ML</LANG>
+      <HI REND="B">ulcer&#x0101;t&#x012B;vus</HI>
+    </ETYM>
+    <SENSE>
+      <DEF>
+        <USG TYPE="FIELD" EXPAN="Medincine">Med.</USG>
+        (a) Having the property of causing sores on the body;
+      </DEF>
+      <DEF>(b) characterized by sores.</DEF>
+      <EG N="a">
+        <CIT MD="1425">
+          <BIBL>
+            <STNCL RID="hyp.227.19991101T123123">
+              <DATE>?a1425</DATE>
+              *<TITLE>Chauliac(1)</TITLE>
+              <MS>NY 12</MS>
+            </STNCL>
+            177a/a
+          </BIBL>
+          <Q>Anacardus is &#x00FE;e pedicule, i. lous, of &#x00FE;e Elephant&#x2026;&amp;
+            it is vlceratif [<TITLE>Ch.(2)</TITLE>: make&#x00FE; blistres; L
+            est vlceratiuus].
+          </Q>
+        </CIT>
+        <CIT MD="1425">
+          <BIBL>
+            <STNCL RID="hyp.522.19981211T105002">
+              <DATE>?a1425</DATE>
+              *<TITLE>MS Htrn.95</TITLE>
+              <MS>Htrn 95</MS>
+            </STNCL>
+            172b/a
+          </BIBL>
+          <Q>Vlceratiue medicines ben alle &#x00FE;o corrosiues &#x00FE;at
+            &#x0292;euen milke, as esula, Anabulla, Canterides, Rwe, and o&#x00FE;ere
+            sucche.
+          </Q>
+        </CIT>
+        <CIT MD="1425">
+          <BIBL>
+            <STNCL RID="hyp.522.19981211T105002">
+              <DATE>?a1425</DATE>
+              *<TITLE>MS Htrn.95</TITLE>
+              <MS>Htrn 95</MS>
+            </STNCL>
+            173a/b
+          </BIBL>
+          <Q>A Corrosiue medicyne &#x00FE;e whiche is cleped vlceratiue is
+            stronger &#x00FE;en &#x00FE;at corrosiue &#x00FE;e whiche is
+            cleped excoriatiue.
+          </Q>
+        </CIT>
+      </EG>
+      <EG N="b">
+        <CIT MD="1425">
+          <BIBL>
+            <STNCL RID="hyp.227.19991101T123123">
+              <DATE>?a1425</DATE>
+              *<TITLE>Chauliac(1)</TITLE>
+              <MS>NY 12</MS>
+            </STNCL>
+            115b/b
+          </BIBL>
+          <Q>&#x00DE;ai [lice] are gendred&#x2026;of materie of &#x00FE;e
+            forsaid infeccionz&#x2026;And for &#x00FE;i putrifaccioun
+            virulent ne vlceratif is not hastied to it.
+          </Q>
+        </CIT>
+      </EG>
+    </SENSE>
+  </ENTRYFREE>
+</MED>

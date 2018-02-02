@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/css" href="http://www-personal.umich.edu/~pfs/mec/code/med.css"?>
+<!DOCTYPE MED SYSTEM
+        "http://www-personal.umich.edu/~pfs/mec/code/med.xml.dtd">
+
+<!-- One of 637 with multiple HD ORTH tags -->
+<MED>
+  <ENTRYFREE ID="MED28" SEQ="28">
+    <FORM>
+      <HDORTH>
+        <REG>abandonen</REG>
+        <ORIG>abandonen</ORIG>
+      </HDORTH>
+      ,
+      <HDORTH>
+        <REG>abandounen</REG>
+        <ORIG>-&#x01D2;unen</ORIG>
+      </HDORTH>
+      <POS>v.</POS> Also
+      <ORTH>
+        <REG>abaundonen</REG>
+        <REG>abaundounen</REG>
+        <ORIG>abaund-</ORIG>
+      </ORTH>
+      ,
+      <ORTH>
+        <REG>aboundonen</REG>
+        <REG>aboundounen</REG>
+        <ORIG>abound-</ORIG>
+      </ORTH>
+      ,
+      <ORTH>
+        <REG>haboundon</REG>
+        <ORIG>haboundon</ORIG>
+      </ORTH>
+      ,
+      <ORTH>
+        <REG>habounden</REG>
+        <ORIG>-en</ORIG>
+      </ORTH>
+      .
+    </FORM>
+    <NOTE>Cp. <HI REND="B">embandounen</HI>.
+    </NOTE>
+    <ETYM>
+      <LANG>OF</LANG>
+      <HI REND="B">abandon(n)er</HI>, <HI REND="B">-(o)uner</HI>.
+    </ETYM>
+    <SENSE N="1">
+      <DEF>To give up or surrender (sth.).</DEF>
+      <EG>
+        <CIT CD="1393">
+          <BIBL>
+            <STNCL RID="hyp.1232.19991101T123123">
+              <DATE>(a1393)</DATE>
+              <AUTHOR>Gower</AUTHOR>
+              <TITLE>CA</TITLE>
+              <MS>Frf 3</MS>
+            </STNCL>
+            prol.766
+          </BIBL>
+          <Q>Thus was abandoned Them|pire, Which cam nevere ayein Into the
+            hond of no Romein.
+          </Q>
+        </CIT>
+        <CIT CD="1393">
+          <BIBL IBID="Y">
+            <STNCL RID="hyp.1232.19991101T123123">
+              <DATE>(a1393)</DATE>
+              <AUTHOR>Gower</AUTHOR>
+              <TITLE>CA</TITLE>
+              <MS>Frf 3</MS>
+            </STNCL>
+            2.2772
+          </BIBL>
+          <Q>Be cause that he was coroned, And that the lond was abandoned To
+            him [etc.].
+          </Q>
+        </CIT>
+      </EG>
+    </SENSE>
+    <SENSE N="2">
+      <DEF>To give (oneself) up or yield utterly (to good or bad): -- usu.
+        refl. or pass. (a) To yield without restraint (to vice); (b) to
+        surrender to the opposite sex; indulge in fornication; <HI REND="B">
+          ~
+        </HI> (one's) <HI REND="B">bodi</HI>; (c) to devote (oneself) fully
+        (to religion, to do good); (d)?to go (somewhere) on impulse, betake
+        (oneself).
+      </DEF>
+      <EG N="a">
+        <CIT CD="1390">
+          <BIBL>
+            <STNCL RID="hyp.1075.19990513T124835">
+              <DATE>(c1390)</DATE>
+              <AUTHOR>Chaucer</AUTHOR>
+              <TITLE>CT.Pars.</TITLE>
+              <MS>Manly-Rickert</MS>
+            </STNCL>
+            I.694
+          </BIBL>
+          <Q>He abaundoneth al his herte to euery maner synne.</Q>
+        </CIT>
+        <CIT CD="1390">
+          <BIBL>
+            <STNCL RID="hyp.871.19990513T124835">
+              <DATE>(c1390)</DATE>
+              <AUTHOR>Chaucer</AUTHOR>
+              <TITLE>CT.Mel.</TITLE>
+              <MS>Manly-Rickert</MS>
+            </STNCL>
+            B.2767
+          </BIBL>
+          <Q>A man that is to desirynge to gete richesses abandoneth hym
+            first to thefte.
+          </Q>
+        </CIT>
+        <CIT CD="1400" MD="1450">
+          <BIBL>
+            <STNCL RID="hyp.1691.19981211T105002">
+              <DATE>c1450(c1400)</DATE>
+              <TITLE>Vices &amp; V.(2)</TITLE>
+              <MS>Hnt HM 147</MS>
+            </STNCL>
+            282/21
+          </BIBL>
+          <Q>&#x00DE;at &#x00FE;ei habounden hem not to &#x00FE;e vanite and
+            couetise of &#x00FE;is world.
+          </Q>
+        </CIT>
+      </EG>
+      <EG N="b">
+        <CIT CD="1390">
+          <BIBL>
+            <STNCL RID="hyp.1075.19990513T124835">
+              <DATE>(c1390)</DATE>
+              <AUTHOR>Chaucer</AUTHOR>
+              <TITLE>CT.Pars.</TITLE>
+              <MS>Manly-Rickert</MS>
+            </STNCL>
+            I.874
+          </BIBL>
+          <Q>Auow|trie..tho that whilom weren o flessh abawndone hir bodyes
+            to othere persones.
+          </Q>
+        </CIT>
+        <CIT CD="1393">
+          <BIBL>
+            <STNCL RID="hyp.1232.19991101T123123">
+              <DATE>(a1393)</DATE>
+              <AUTHOR>Gower</AUTHOR>
+              <TITLE>CA</TITLE>
+              <MS>Frf 3</MS>
+            </STNCL>
+            5.5378
+          </BIBL>
+          <Q>Sche to him was abandouned [rime: rouned]..The ferste flour he
+            tok aweie.
+          </Q>
+        </CIT>
+        <CIT CD="1440" MD="1450">
+          <BIBL>
+            <STNCL RID="hyp.429.19990304T151115">
+              <DATE>c1450(c1440)</DATE>
+              <AUTHOR>Scrope</AUTHOR>
+              <TITLE>Othea</TITLE>
+              <MS>StJ-C H.5</MS>
+            </STNCL>
+            18
+          </BIBL>
+          <Q>He shuld not abaundon his body ne his entent..the vice of
+            lecherye steynyth all vertues.
+          </Q>
+        </CIT>
+        <CIT CD="1450" MD="1500">
+          <BIBL>
+            <STNCL RID="hyp.407.19981211T105002">
+              <DATE>a1500(?c1450)</DATE>
+              <TITLE>Merlin</TITLE>
+              <MS>Cmb Ff.3.11</MS>
+            </STNCL>
+            7
+          </BIBL>
+          <Q>She..abandoned hire body to alle men.</Q>
+        </CIT>
+      </EG>
+      <EG N="c">
+        <CIT CD="1390">
+          <BIBL>
+            <STNCL RID="hyp.1075.19990513T124835">
+              <DATE>(c1390)</DATE>
+              <AUTHOR>Chaucer</AUTHOR>
+              <TITLE>CT.Pars.</TITLE>
+              <MS>Manly-Rickert</MS>
+            </STNCL>
+            I.713
+          </BIBL>
+          <Q>He that loueth god, he wol..abaundone hym self with al his myght
+            wel for to doon.
+          </Q>
+        </CIT>
+        <CIT CD="1393">
+          <BIBL>
+            <STNCL RID="hyp.1232.19991101T123123">
+              <DATE>(a1393)</DATE>
+              <AUTHOR>Gower</AUTHOR>
+              <TITLE>CA</TITLE>
+              <MS>Frf 3</MS>
+            </STNCL>
+            2.1596
+          </BIBL>
+          <Q>Moris hir Sone..so ferforth was abandouned [rime: corouned] To
+            Cristes feith, that men him calle Moris the cristeneste of alle.
+          </Q>
+        </CIT>
+        <CIT CD="1440" MD="1450">
+          <BIBL>
+            <STNCL RID="hyp.429.19990304T151115">
+              <DATE>c1450(c1440)</DATE>
+              <AUTHOR>Scrope</AUTHOR>
+              <TITLE>Othea</TITLE>
+              <MS>StJ-C H.5</MS>
+            </STNCL>
+            38
+          </BIBL>
+          <Q>On the same wyse shuld a good knygh be habaundonede to all
+            personys, and to gyffe..comfort aftyr hys power.
+          </Q>
+        </CIT>
+      </EG>
+      <EG N="d">
+        <CIT CD="1393">
+          <BIBL>
+            <STNCL RID="hyp.1232.19991101T123123">
+              <DATE>(a1393)</DATE>
+              <AUTHOR>Gower</AUTHOR>
+              <TITLE>CA</TITLE>
+              <MS>Frf 3</MS>
+            </STNCL>
+            8.1834
+          </BIBL>
+          <Q>The king himself hath abandoned Into the temple in good
+            entente.
+          </Q>
+        </CIT>
+      </EG>
+    </SENSE>
+  </ENTRYFREE>
+</MED>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/css" href="http://www-personal.umich.edu/~pfs/mec/code/med.css"?>
+<!DOCTYPE MED SYSTEM
+        "http://www-personal.umich.edu/~pfs/mec/code/med.xml.dtd">
+<MED>
+  <ENTRYFREE ID="MED47544" SEQ="47543">
+    <FORM>
+      <HDORTH>
+        <REG>u</REG>
+        <ORIG>u</ORIG>
+      </HDORTH>
+      <POS>n.</POS>
+    </FORM>
+    <NOTE>Cp. <HI REND="B">v</HI> n.
+    </NOTE>
+    <SENSE>
+      <DEF>(a) The letter u of the alphabet, or its sound [usu. represented
+        in writing by v];
+      </DEF>
+      <DEF>(b) the u-section of an alphabetized list [alternating with v and
+        w].
+      </DEF>
+      <EG N="a">
+        <CIT MD="1200">
+          <BIBL>
+            <STNCL RID="hyp.701.19990304T151115">
+              <DATE>?c1200</DATE>
+              <TITLE>Stw.57 Abecedarium</TITLE>
+              <MS>Stw 57</MS>
+            </STNCL>
+            450
+          </BIBL>
+          <Q>T: te; V: u; Xx: ex.</Q>
+        </CIT>
+        <CIT MD="1400">
+          <BIBL>
+            <STNCL RID="hyp.537.19990304T151115">
+              <DATE>?c1400</DATE>
+              <TITLE>Sloane SSecr.</TITLE>
+              <MS>Sln 213</MS>
+            </STNCL>
+            16/8
+          </BIBL>
+          <Q>Acounte &#x00FE;e letteres of &#x00FE;o names by &#x00FE;e
+            noumbre of &#x00FE;is suyng Abece&#x2026;A: 1, B: 4, C: 4&#x2026;T:
+            2, V: 2, X: 3, Z: 4.
+          </Q>
+        </CIT>
+        <CIT MD="1425">
+          <BIBL>
+            <STNCL RID="hyp.1565.19981211T105002">
+              <DATE>a1425</DATE>
+              <TITLE>Tit.Alphabet</TITLE> in <TITLE>MP 87</TITLE>
+              <MS>Tit D.17</MS>
+            </STNCL>
+            267
+          </BIBL>
+          <Q>Alphabetum Anglicum&#x2026;t, te; u; x, ix.</Q>
+        </CIT>
+        <CIT MD="1450">
+          <BIBL>
+            <STNCL RID="hyp.1638.19981211T105002">
+              <DATE>c1450</DATE>
+              <TITLE>Trin-C.Accedence</TITLE>
+              <MS>Trin-C O.5.4</MS>
+            </STNCL>
+            36/190
+          </BIBL>
+          <Q>The fourthe declynson is of the which the genityf case singuler
+            endyth in -vs&#x2026;the ablatyf in -v.
+          </Q>
+        </CIT>
+        <CIT MD="1460">
+          <BIBL>
+            <STNCL RID="hyp.1833.19990513T124835">
+              <DATE>c1460</DATE>
+              <TITLE>Erly in a someristide</TITLE>
+              <MS>Dub 432</MS>
+            </STNCL>
+            154/13
+          </BIBL>
+          <Q>There was an v and thre arres to gydre&#x2026;of which I shal
+            reherse.
+          </Q>
+        </CIT>
+        <CIT MD="1484">
+          <BIBL>
+            <STNCL RID="hyp.1599.19981211T105002">
+              <DATE>a1484</DATE>
+              <TITLE>Treat.7 Lib.Arts</TITLE>
+              <MS>Trin-C R.14.52</MS>
+            </STNCL>
+            1039/65,75
+          </BIBL>
+          <Q>We shuln vndirstonde the nature of&#x2026;the v vowels, the
+            whiche han divers placis&#x2026;of their generacioun&#x2026;the
+            first letter a&#x2026;is in figure like a triangle; or ellis it
+            is contrarie wise and than is v caused, and his figure is turned
+            and hath contrarie situacioun&#x2026;bicause that the place of
+            the complete generacioun of the letter a is bifore the place of
+            e, the place of e bifore i, and i bifore o, and&#x2026;o&#x2026;bifore&#x2026;v,
+            therfor thiese vowels be so ordeyned a e i o v.
+          </Q>
+        </CIT>
+      </EG>
+      <EG N="b">
+        <CIT MD="1425">
+          <BIBL>
+            <STNCL RID="hyp.1191.19990304T151115">
+              <DATE>c1425</DATE>
+              <TITLE>Wycl.Concord.</TITLE>in <TITLE>Spec.43</TITLE>
+              <MS>Roy 17.B.1</MS>
+            </STNCL>
+            271
+          </BIBL>
+          <Q>If &#x00FE;ee list fynde &#x00FE;is text, &#x2018;womman lo
+            &#x00FE;i sone&#x2019;, if &#x00FE;ou fynde it not in &#x2018;s&#x2019;
+            in &#x00FE;is word &#x2018;sone&#x2019;, &#x00FE;ou shalt fynde
+            it in &#x2018;v&#x2019;, in &#x00FE;is word &#x2018;womman&#x2019;.
+          </Q>
+        </CIT>
+        <CIT MD="1425">
+          <BIBL>
+            <STNCL RID="hyp.236.19991101T123123">
+              <DATE>?c1425</DATE>
+              <TITLE>Chauliac(2)</TITLE>
+              <MS>Paris angl.25</MS>
+            </STNCL>
+            630/12
+          </BIBL>
+          <Q>Of &#x00FE;e lettre V [*<TITLE>Ch.(1)</TITLE>: Medicynez
+            bigynnyng by V]&#x2026;Vua passa&#x2026;Vmbelicus&#x2026;Vrtica&#x2026;Vryn,
+            [etc.].
+          </Q>
+        </CIT>
+      </EG>
+    </SENSE>
+  </ENTRYFREE>
+</MED>
