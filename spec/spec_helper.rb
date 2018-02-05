@@ -12,3 +12,6 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+require 'pathname'
+SPEC_DATA = Pathname.new(__dir__) + 'data'

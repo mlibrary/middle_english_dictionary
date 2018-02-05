@@ -9,7 +9,7 @@ module MiddleEnglishDictionary
       end
 
       def all_forms
-        regs.concat(origs).uniq
+        origs.concat(regs).uniq
       end
 
       def self.new_from_nokonode(node)
