@@ -25,3 +25,4 @@ RSpec.describe MiddleEnglishDictionary::Entry do
 
   end
 end
+
