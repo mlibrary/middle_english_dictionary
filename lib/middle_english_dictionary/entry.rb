@@ -3,6 +3,7 @@ require 'nokogiri'
 require 'middle_english_dictionary/xml_utilities'
 require 'middle_english_dictionary/entry/orth'
 require 'middle_english_dictionary/entry/sense'
+require 'representable/json'
 
 module MiddleEnglishDictionary
 
@@ -13,16 +14,16 @@ module MiddleEnglishDictionary
 
     extend Entry::Constructors
     ROOT_XPATHS = {
-        entry: '/MED/ENTRYFREE',
+      entry: '/MED/ENTRYFREE',
     }
 
     ENTRY_XPATHS = {
-        hdorth: 'FORM/HDORTH',
-        other_orth: 'FORM/ORTH',
-        pos: 'FORM/POS',
-        etym: 'ETYM',
-        etym_languages: 'ETYM/LANG',
-        sense: 'SENSE'
+      hdorth:         'FORM/HDORTH',
+      other_orth:     'FORM/ORTH',
+      pos:            'FORM/POS',
+      etym:           'ETYM',
+      etym_languages: 'ETYM/LANG',
+      sense:          'SENSE'
     }
 
 
@@ -34,29 +35,28 @@ module MiddleEnglishDictionary
 
       entry_nokonode = root_nokonode.at(ROOT_XPATHS[:entry])
 
-      entry = self.new
+      entry        = self.new
       entry.source = source
-      entry.xml  = entry_nokonode.to_xml
+      entry.xml    = entry_nokonode.to_xml
 
-      entry.id = entry_nokonode.attr('ID')
+      entry.id       = entry_nokonode.attr('ID')
       entry.sequence = entry_nokonode.attr('SEQ').to_i
 
-      entry.headwords = derive_headwords(entry_nokonode)
-      entry.orths     = derive_orths(entry_nokonode)
+      entry.headwords = entry.derive_headwords(entry_nokonode)
+      entry.orths     = entry.derive_orths(entry_nokonode)
 
-      entry.etym = if etym_node = entry_nokonode.at(ENTRY_XPATHS[:etym])
-                     etym_node.to_xml
-                   else
-                     nil
-                   end
+      entry.etym           = if etym_node = entry_nokonode.at(ENTRY_XPATHS[:etym])
+                               etym_node.to_xml
+                             else
+                               nil
+                             end
       entry.etym_languages = entry_nokonode.xpath(ENTRY_XPATHS[:etym_languages]).map(&:text).map(&:upcase)
 
       entry.pos_raw = entry_nokonode.at(ENTRY_XPATHS[:pos]).text
 
-      entry.senses = entry_nokonode.xpath('SENSE').map{|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
+      entry.senses = entry_nokonode.xpath('SENSE').map {|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
       entry
     end
-
 
 
     def original_headwords
@@ -99,15 +99,31 @@ module MiddleEnglishDictionary
       pos_raw.downcase.gsub(/\s*\(\d\)\s*\Z/, '').gsub(/\.+\s*\Z/, '').gsub(/\./, ' ')
     end
 
-    private
-    def self.derive_headwords(entry_nokonode)
-      entry_nokonode.xpath(ENTRY_XPATHS[:hdorth]).map {|w| Entry::Orth.new_from_nokonode(w)}
+    def derive_headwords(entry_nokonode)
+      entry_nokonode.xpath(ENTRY_XPATHS[:hdorth]).map {|w| Entry::Orth.new_from_nokonode(w, entry_id: id)}
     end
 
-    def self.derive_orths(entry_nokonode)
-      entry_nokonode.xpath(ENTRY_XPATHS[:other_orth]).map {|w| Entry::Orth.new_from_nokonode(w)}
+    def derive_orths(entry_nokonode)
+      entry_nokonode.xpath(ENTRY_XPATHS[:other_orth]).map {|w| Entry::Orth.new_from_nokonode(w, entry_id: id)}
     end
 
   end
 
+  class EntryRepresenter < Representable::Decorator
+    include Representable::JSON
+# :headwords, :source, :id, :sequence, :orths, :xml,
+#    :etym, :etym_languages, :pos_raw, :senses
+    property :id
+    property :source
+    property :sequence
+    property :xml
+    property :etym
+    property :etym_languages
+    property :pos_raw
+
+    collection :headwords, decorator: Entry::OrthRepresenter, class: Entry::Orth
+    collection :orths, decorator: Entry::OrthRepresenter, class: Entry::Orth
+    collection :senses, decorator: Entry::SenseRepresenter, class: Entry::Sense
+
+  end
 end

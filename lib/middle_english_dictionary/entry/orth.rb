@@ -1,4 +1,5 @@
 require 'middle_english_dictionary/entry/constructors'
+require 'representable/json'
 
 module MiddleEnglishDictionary
   class Entry
@@ -10,8 +11,8 @@ module MiddleEnglishDictionary
 
       def initialize(regs: [], origs: [], entry_id: nil)
         @entry_id = entry_id
-        @regs = regs
-        @origs = origs
+        @regs     = regs
+        @origs    = origs
       end
 
       def all_forms
@@ -19,11 +20,20 @@ module MiddleEnglishDictionary
       end
 
       def self.new_from_nokonode(node, entry_id: nil)
-        regs = node.xpath('REG').map(&:text)
+        regs  = node.xpath('REG').map(&:text)
         origs = node.xpath('ORIG').map(&:text)
         self.new(regs: regs, origs: origs, entry_id: entry_id)
       end
 
     end
+
+    class OrthRepresenter < Representable::Decorator
+      include Representable::JSON
+
+      property :entry_id
+      property :regs
+      property :origs
+    end
+
   end
 end

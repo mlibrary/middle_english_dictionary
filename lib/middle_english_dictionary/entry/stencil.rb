@@ -1,3 +1,5 @@
+require 'representable/json'
+
 module MiddleEnglishDictionary
   class Entry
     # A Stencil is a a bibliographic reference. Here we pull
@@ -23,6 +25,17 @@ module MiddleEnglishDictionary
         stencil
       end
 
+    end
+
+    class StencilRepresenter < Representable::Decorator
+      include Representable::JSON
+
+      property :rid
+      property :date
+      property :highlighted_phrases
+      property :title
+      property :ms
+      property :entry_id
     end
   end
 end

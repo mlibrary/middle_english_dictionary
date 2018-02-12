@@ -1,3 +1,5 @@
+require 'representable/json'
+
 module MiddleEnglishDictionary
   class Entry
 
@@ -26,5 +28,19 @@ module MiddleEnglishDictionary
       end
 
     end
+
+    class QuoteRepresenter < Representable::Decorator
+      include Representable::JSON
+
+      property :entry_id
+      property :titles
+      property :added
+      property :ovars
+      property :highlighted_phrases
+      property :text
+      property :xml
+
+    end
+
   end
 end
