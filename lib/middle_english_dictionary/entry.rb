@@ -1,6 +1,9 @@
+require 'middle_english_dictionary/entry/constructors'
 require 'nokogiri'
 require 'middle_english_dictionary/xml_utilities'
 require 'middle_english_dictionary/entry/orth'
+require 'middle_english_dictionary/entry/sense'
+
 module MiddleEnglishDictionary
 
   # For notes, we'll just store the xml and the text and not worry about it
@@ -8,6 +11,7 @@ module MiddleEnglishDictionary
 
   class Entry
 
+    extend Entry::Constructors
     ROOT_XPATHS = {
         entry: '/MED/ENTRYFREE',
     }
@@ -23,7 +27,7 @@ module MiddleEnglishDictionary
 
 
     attr_accessor :headwords, :source, :id, :sequence, :orths, :xml,
-                  :etym, :etym_languages, :pos_raw
+                  :etym, :etym_languages, :pos_raw, :senses
 
     def self.new_from_nokonode(root_nokonode, source: nil)
       MiddleEnglishDictionary::XMLUtilities.case_raise_all_tags!(root_nokonode)
@@ -48,18 +52,12 @@ module MiddleEnglishDictionary
       entry.etym_languages = entry_nokonode.xpath(ENTRY_XPATHS[:etym_languages]).map(&:text).map(&:upcase)
 
       entry.pos_raw = entry_nokonode.at(ENTRY_XPATHS[:pos]).text
+
+      entry.senses = entry_nokonode.xpath('SENSE').map{|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
       entry
     end
 
 
-
-    def self.new_from_xml_file(filename)
-      new_from_xml(File.open(filename, 'r:utf-8').read, source: filename)
-    end
-
-    def self.new_from_xml(xml, source: nil)
-      new_from_nokonode(Nokogiri::XML(xml), source: source)
-    end
 
     def original_headwords
       headwords.flat_map(&:origs).uniq
