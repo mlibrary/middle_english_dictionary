@@ -20,6 +20,26 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="declarative (vbundled(0.0.10)) [path][gem]">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/declarative-0.0.10/lib" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/declarative-0.0.10/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="declarative-option (vbundled(0.1.0)) [path][gem]">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/declarative-option-0.1.0/lib" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/declarative-option-0.1.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="diff-lcs (vbundled(1.3)) [path][gem]">
         <CLASSES>
           <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/diff-lcs-1.3/autotest" />
@@ -52,6 +72,16 @@
         <SOURCES>
           <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/mini_portile2-2.3.0/lib" />
           <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/mini_portile2-2.3.0/concourse" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="multi_json (vbundled(1.13.1)) [path][gem]">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/multi_json-1.13.1/lib" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/multi_json-1.13.1/lib" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -104,6 +134,16 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="representable (vbundled(3.0.4)) [path][gem]">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/representable-3.0.4/lib" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/representable-3.0.4/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="rspec (vbundled(3.7.0)) [path][gem]">
         <CLASSES>
           <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/rspec-3.7.0/lib" />
@@ -152,6 +192,16 @@
         </CLASSES>
         <SOURCES>
           <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/rspec-support-3.7.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="uber (vbundled(0.1.0)) [path][gem]">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/uber-0.1.0/lib" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/.bundle/ruby/2.4.0/gems/uber-0.1.0/lib" />
         </SOURCES>
       </library>
     </orderEntry>
