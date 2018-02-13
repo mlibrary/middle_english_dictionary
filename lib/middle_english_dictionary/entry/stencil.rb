@@ -11,11 +11,12 @@ module MiddleEnglishDictionary
     class Stencil
 
       attr_accessor :rid, :date, :highlighted_phrases,
-                    :title, :ms, :entry_id, :notes
+                    :title, :ms, :entry_id, :notes, :xml
 
       def self.new_from_nokonode(nokonode, entry_id: nil)
         stencil          = self.new
         stencil.entry_id = entry_id
+        stencil.xml      = nokonode.to_xml
 
         stencil.rid                 = nokonode.attr('RID')
         stencil.date                = nokonode.xpath('DATE').map(&:text).first
@@ -31,6 +32,7 @@ module MiddleEnglishDictionary
     class StencilRepresenter < Representable::Decorator
       include Representable::JSON
 
+      property :xml
       property :rid
       property :date
       property :highlighted_phrases

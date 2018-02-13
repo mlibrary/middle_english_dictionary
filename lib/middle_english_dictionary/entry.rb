@@ -3,6 +3,7 @@ require 'nokogiri'
 require 'middle_english_dictionary/xml_utilities'
 require 'middle_english_dictionary/entry/orth'
 require 'middle_english_dictionary/entry/sense'
+require 'middle_english_dictionary/entry/supplement'
 require 'representable/json'
 
 module MiddleEnglishDictionary
@@ -28,7 +29,8 @@ module MiddleEnglishDictionary
 
 
     attr_accessor :headwords, :source, :id, :sequence, :orths, :xml,
-                  :etym, :etym_languages, :pos_raw, :senses, :notes
+                  :etym, :etym_languages, :pos_raw, :senses, :notes,
+                  :supplements
 
     def self.new_from_nokonode(root_nokonode, source: nil)
       MiddleEnglishDictionary::XMLUtilities.case_raise_all_tags!(root_nokonode)
@@ -54,7 +56,8 @@ module MiddleEnglishDictionary
 
       entry.pos_raw = entry_nokonode.at(ENTRY_XPATHS[:pos]).text
 
-      entry.senses = entry_nokonode.xpath('SENSE').map {|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
+      entry.senses      = entry_nokonode.xpath('SENSE').map {|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
+      entry.supplements = entry_nokonode.xpath('SUPPLEMENT').map {|supp| Supplement.new_from_nokonode(supp, entry_id: entry.id)}
 
       entry.notes = entry_nokonode.xpath('NOTE').map(&:text)
       entry
@@ -128,6 +131,6 @@ module MiddleEnglishDictionary
     collection :headwords, decorator: Entry::OrthRepresenter, class: Entry::Orth
     collection :orths, decorator: Entry::OrthRepresenter, class: Entry::Orth
     collection :senses, decorator: Entry::SenseRepresenter, class: Entry::Sense
-
+    collection :supplements, decorator: Entry::SupplementRepresenter, class: Entry::Supplement
   end
 end

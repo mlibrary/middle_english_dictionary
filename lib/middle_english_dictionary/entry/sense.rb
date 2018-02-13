@@ -16,8 +16,8 @@ module MiddleEnglishDictionary
 
         sense                 = self.new
         sense.xml             = nokonode.to_xml
-        sense.definition_xml  = nokonode.at('DEF').to_xml
-        sense.definition_text = nokonode.at('DEF').text
+        sense.definition_xml  = nokonode.xpath('DEF').map(&:to_xml).join("\n")
+        sense.definition_text = nokonode.xpath('DEF').map(&:text).join("\n")
         sense.sense_number    = (nokonode.attr('N') || 0).to_i
 
         sense.entry_id = entry_id
