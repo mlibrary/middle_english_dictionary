@@ -56,6 +56,14 @@ RSpec.describe MiddleEnglishDictionary::Entry do
     it "translates the part of speech" do
       expect(e.normalized_pos_raw).to eq('n')
     end
+
+    it "finds the etym languages" do
+      expect(e.etym_languages).to eq(['ON', 'OI', 'OE'])
+    end
+
+    it "gets all the senses" do
+      expect(e.senses.count).to eq(2)
+    end
   end
 
 end

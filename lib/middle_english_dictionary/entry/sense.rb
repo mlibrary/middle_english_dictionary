@@ -1,15 +1,15 @@
-require 'middle_english_dictionary/entry/constructors'
+require 'middle_english_dictionary/entry/class_methods'
 require_relative 'eg'
 require 'representable/json'
 
 module MiddleEnglishDictionary
   class Entry
     class Sense
-      extend Entry::Constructors
+      extend Entry::ClassMethods
 
       attr_accessor :xml, :definition_xml, :definition_text,
                     :discipline_usages, :grammatical_usages,
-                    :egs, :sense_number, :entry_id
+                    :egs, :sense_number, :entry_id, :notes
 
 
       def self.new_from_nokonode(nokonode, entry_id: nil)
@@ -26,6 +26,8 @@ module MiddleEnglishDictionary
         sense.discipline_usages  = sense.get_discipline_usages(nokonode)
 
         sense.egs = nokonode.css('EG').map {|eg| EG.new_from_nokonode(eg, entry_id: entry_id)}
+
+        sense.notes = nokonode.xpath('NOTE').map(&:text)
 
         sense
       end
@@ -50,6 +52,8 @@ module MiddleEnglishDictionary
       property :grammatical_usages
       property :discipline_usages
       collection :egs, decorator: EGRepresenter, class: EG
+      property :notes
+
     end
 
   end

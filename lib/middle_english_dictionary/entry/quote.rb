@@ -11,10 +11,10 @@ module MiddleEnglishDictionary
     # up with the given tag
     class Quote
       attr_accessor :titles, :added, :ovars, :highlighted_phrases,
-                    :text, :xml, :entry_id
+                    :text, :xml, :entry_id, :notes
 
       def self.new_from_nokonode(nokonode, entry_id: nil)
-        q = self.new
+        q          = self.new
         q.entry_id = entry_id
 
         q.titles              = nokonode.xpath("TITLE").map(&:text).uniq
@@ -23,7 +23,7 @@ module MiddleEnglishDictionary
         q.highlighted_phrases = nokonode.xpath("HI").map(&:text).uniq
         q.text                = nokonode.text
         q.xml                 = nokonode.to_xml
-
+        q.notes               = nokonode.xpath('NOTE').map(&:text)
         q
       end
 
@@ -39,6 +39,8 @@ module MiddleEnglishDictionary
       property :highlighted_phrases
       property :text
       property :xml
+      property :notes
+
 
     end
 

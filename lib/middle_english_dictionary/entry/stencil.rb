@@ -10,18 +10,19 @@ module MiddleEnglishDictionary
     # to the hyperbib
     class Stencil
 
-      attr_accessor :rid, :date, :highlighted_phrases, :title, :ms, :entry_id
+      attr_accessor :rid, :date, :highlighted_phrases,
+                    :title, :ms, :entry_id, :notes
 
       def self.new_from_nokonode(nokonode, entry_id: nil)
-        stencil = self.new
+        stencil          = self.new
         stencil.entry_id = entry_id
 
-        stencil.rid = nokonode.attr('RID')
-        stencil.date = nokonode.xpath('DATE').map(&:text).first
+        stencil.rid                 = nokonode.attr('RID')
+        stencil.date                = nokonode.xpath('DATE').map(&:text).first
         stencil.highlighted_phrases = nokonode.css('HI').map(&:text).uniq
-        stencil.title = nokonode.xpath('TITLE').map(&:text).first
-        stencil.ms = nokonode.xpath('MS').map(&:text).first
-
+        stencil.title               = nokonode.xpath('TITLE').map(&:text).first
+        stencil.ms                  = nokonode.xpath('MS').map(&:text).first
+        stencil.notes               = nokonode.xpath('NOTE').map(&:text)
         stencil
       end
 
@@ -36,6 +37,8 @@ module MiddleEnglishDictionary
       property :title
       property :ms
       property :entry_id
+      property :notes
+
     end
   end
 end

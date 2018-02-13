@@ -7,7 +7,7 @@ module MiddleEnglishDictionary
     # the XML
     class Bib
 
-      attr_accessor :stencil, :xml, :entry_id
+      attr_accessor :stencil, :xml, :entry_id, :notes
 
       def self.new_from_nokonode(nokonode, entry_id: nil)
         stencil_node = nokonode.at('STNCL')
@@ -15,7 +15,7 @@ module MiddleEnglishDictionary
         bib.entry_id = entry_id
         bib.stencil  = Stencil.new_from_nokonode(stencil_node, entry_id: entry_id) if stencil_node
         bib.xml      = nokonode.to_xml
-
+        bib.notes    = nokonode.xpath('NOTE').map(&:text)
         bib
       end
     end
@@ -26,6 +26,8 @@ module MiddleEnglishDictionary
       property :entry_id
       property :xml
       property :stencil, decorator: StencilRepresenter, class: Stencil
+      property :notes
+
     end
 
 

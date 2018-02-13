@@ -12,6 +12,5 @@ RSpec.describe MiddleEnglishDictionary::Entry::Sense do
   it "Gets the usages" do
     expect(sense.discipline_usages).to eq(['Law'])
     expect(sense.grammatical_usages).to eq(['ppl.'])
-
   end
 end

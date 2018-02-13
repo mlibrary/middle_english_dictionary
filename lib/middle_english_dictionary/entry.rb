@@ -1,4 +1,4 @@
-require 'middle_english_dictionary/entry/constructors'
+require 'middle_english_dictionary/entry/class_methods'
 require 'nokogiri'
 require 'middle_english_dictionary/xml_utilities'
 require 'middle_english_dictionary/entry/orth'
@@ -12,7 +12,7 @@ module MiddleEnglishDictionary
 
   class Entry
 
-    extend Entry::Constructors
+    extend Entry::ClassMethods
     ROOT_XPATHS = {
       entry: '/MED/ENTRYFREE',
     }
@@ -28,7 +28,7 @@ module MiddleEnglishDictionary
 
 
     attr_accessor :headwords, :source, :id, :sequence, :orths, :xml,
-                  :etym, :etym_languages, :pos_raw, :senses
+                  :etym, :etym_languages, :pos_raw, :senses, :notes
 
     def self.new_from_nokonode(root_nokonode, source: nil)
       MiddleEnglishDictionary::XMLUtilities.case_raise_all_tags!(root_nokonode)
@@ -55,6 +55,8 @@ module MiddleEnglishDictionary
       entry.pos_raw = entry_nokonode.at(ENTRY_XPATHS[:pos]).text
 
       entry.senses = entry_nokonode.xpath('SENSE').map {|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
+
+      entry.notes = entry_nokonode.xpath('NOTE').map(&:text)
       entry
     end
 
@@ -120,6 +122,8 @@ module MiddleEnglishDictionary
     property :etym
     property :etym_languages
     property :pos_raw
+
+    property :notes
 
     collection :headwords, decorator: Entry::OrthRepresenter, class: Entry::Orth
     collection :orths, decorator: Entry::OrthRepresenter, class: Entry::Orth
