@@ -10,18 +10,20 @@ module MiddleEnglishDictionary
     # to the hyperbib
     class Stencil
 
-      attr_accessor :rid, :date, :highlighted_phrases, :title, :ms, :entry_id
+      attr_accessor :rid, :date, :highlighted_phrases,
+                    :title, :ms, :entry_id, :notes, :xml
 
       def self.new_from_nokonode(nokonode, entry_id: nil)
-        stencil = self.new
+        stencil          = self.new
         stencil.entry_id = entry_id
+        stencil.xml      = nokonode.to_xml
 
-        stencil.rid = nokonode.attr('RID')
-        stencil.date = nokonode.xpath('DATE').map(&:text).first
+        stencil.rid                 = nokonode.attr('RID')
+        stencil.date                = nokonode.xpath('DATE').map(&:text).first
         stencil.highlighted_phrases = nokonode.css('HI').map(&:text).uniq
-        stencil.title = nokonode.xpath('TITLE').map(&:text).first
-        stencil.ms = nokonode.xpath('MS').map(&:text).first
-
+        stencil.title               = nokonode.xpath('TITLE').map(&:text).first
+        stencil.ms                  = nokonode.xpath('MS').map(&:text).first
+        stencil.notes               = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
         stencil
       end
 
@@ -30,12 +32,17 @@ module MiddleEnglishDictionary
     class StencilRepresenter < Representable::Decorator
       include Representable::JSON
 
+      property :entry_id
+      property :xml
+
       property :rid
       property :date
       property :highlighted_phrases
       property :title
       property :ms
-      property :entry_id
+
+      property :notes
+
     end
   end
 end

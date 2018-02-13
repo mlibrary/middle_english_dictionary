@@ -1,6 +1,6 @@
 module MiddleEnglishDictionary
   class Entry
-    module Constructors
+    module ClassMethods
       def new_from_xml(xml, source: nil)
         new_from_nokonode(Nokogiri::XML(xml), source: source)
       end
@@ -9,5 +9,6 @@ module MiddleEnglishDictionary
         new_from_xml(File.open(filename, 'r:utf-8').read, source: filename)
       end
     end
+
   end
 end

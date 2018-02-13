@@ -1,15 +1,15 @@
-require 'middle_english_dictionary/entry/constructors'
+require 'middle_english_dictionary/entry/class_methods'
 require 'representable/json'
 
 module MiddleEnglishDictionary
   class Entry
     class Orth
 
-      extend Entry::Constructors
+      extend Entry::ClassMethods
 
-      attr_accessor :regs, :origs, :entry_id
+      attr_accessor :regs, :origs, :entry_id, :notes
 
-      def initialize(regs: [], origs: [], entry_id: nil)
+      def initialize(regs: [], origs: [], entry_id: nil, notes: [])
         @entry_id = entry_id
         @regs     = regs
         @origs    = origs
@@ -19,10 +19,11 @@ module MiddleEnglishDictionary
         origs.concat(regs).uniq
       end
 
-      def self.new_from_nokonode(node, entry_id: nil)
-        regs  = node.xpath('REG').map(&:text)
-        origs = node.xpath('ORIG').map(&:text)
-        self.new(regs: regs, origs: origs, entry_id: entry_id)
+      def self.new_from_nokonode(nokonode, entry_id: nil)
+        regs  = nokonode.xpath('REG').map(&:text)
+        origs = nokonode.xpath('ORIG').map(&:text)
+        notes = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
+        self.new(regs: regs, origs: origs, entry_id: entry_id, notes: notes)
       end
 
     end
@@ -33,6 +34,8 @@ module MiddleEnglishDictionary
       property :entry_id
       property :regs
       property :origs
+      property :notes
+
     end
 
   end
