@@ -8,7 +8,7 @@ RSpec.describe MiddleEnglishDictionary::Entry do
     let(:bb) {MiddleEnglishDictionary::Entry.new_from_xml_file(SPEC_DATA + 'bare_bones.xml')}
 
     it "gets the etym xml" do
-      expect(e.etym).to match(%r[\(cp. <LANG>OI</LANG>])
+      expect(e.etym).to match(%r[cp. <LANG>OI</LANG>])
     end
 
     it "gets the languages" do

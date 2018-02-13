@@ -23,7 +23,7 @@ module MiddleEnglishDictionary
         stencil.highlighted_phrases = nokonode.css('HI').map(&:text).uniq
         stencil.title               = nokonode.xpath('TITLE').map(&:text).first
         stencil.ms                  = nokonode.xpath('MS').map(&:text).first
-        stencil.notes               = nokonode.xpath('NOTE').map(&:text)
+        stencil.notes               = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
         stencil
       end
 
@@ -32,13 +32,15 @@ module MiddleEnglishDictionary
     class StencilRepresenter < Representable::Decorator
       include Representable::JSON
 
+      property :entry_id
       property :xml
+
       property :rid
       property :date
       property :highlighted_phrases
       property :title
       property :ms
-      property :entry_id
+
       property :notes
 
     end

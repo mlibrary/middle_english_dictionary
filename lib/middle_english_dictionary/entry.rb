@@ -59,10 +59,12 @@ module MiddleEnglishDictionary
       entry.senses      = entry_nokonode.xpath('SENSE').map {|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
       entry.supplements = entry_nokonode.xpath('SUPPLEMENT').map {|supp| Supplement.new_from_nokonode(supp, entry_id: entry.id)}
 
-      entry.notes = entry_nokonode.xpath('NOTE').map(&:text)
+      entry.notes = entry_nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
       entry
     end
 
+
+    # Getting headwords and forms
 
     def original_headwords
       headwords.flat_map(&:origs).uniq
@@ -100,24 +102,34 @@ module MiddleEnglishDictionary
       all_original_forms.concat(all_regularized_forms).uniq
     end
 
-    def normalized_pos_raw(pos_raw = self.pos_raw)
-      pos_raw.downcase.gsub(/\s*\(\d\)\s*\Z/, '').gsub(/\.+\s*\Z/, '').gsub(/\./, ' ')
-    end
-
+    # @private
     def derive_headwords(entry_nokonode)
       entry_nokonode.xpath(ENTRY_XPATHS[:hdorth]).map {|w| Entry::Orth.new_from_nokonode(w, entry_id: id)}
     end
 
+    # @private
     def derive_orths(entry_nokonode)
       entry_nokonode.xpath(ENTRY_XPATHS[:other_orth]).map {|w| Entry::Orth.new_from_nokonode(w, entry_id: id)}
     end
+
+
+    # Part of speech
+    #
+    def normalized_pos_raw(pos_raw = self.pos_raw)
+      pos_raw.downcase.gsub(/\s*\(\d\)\s*\Z/, '').gsub(/\.+\s*\Z/, '').gsub(/\./, ' ')
+    end
+
+    # Citations from the sense(s) and the supplement(s)
+    def all_citations
+      [senses, supplements].flatten.flat_map(&:egs).flat_map(&:citations)
+    end
+
 
   end
 
   class EntryRepresenter < Representable::Decorator
     include Representable::JSON
-# :headwords, :source, :id, :sequence, :orths, :xml,
-#    :etym, :etym_languages, :pos_raw, :senses
+
     property :id
     property :source
     property :sequence

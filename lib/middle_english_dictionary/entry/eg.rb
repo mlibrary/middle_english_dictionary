@@ -14,7 +14,7 @@ module MiddleEnglishDictionary
         eg.subdef_entry = (nokonode.attr('N') || '').downcase
         eg.citations    = nokonode.xpath('CIT').map {|cit| Citation.new_from_nokonode(cit, entry_id: entry_id)}
         eg.entry_id     = entry_id
-        eg.notes = nokonode.xpath('NOTE').map(&:text)
+        eg.notes = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
 
         eg
       end

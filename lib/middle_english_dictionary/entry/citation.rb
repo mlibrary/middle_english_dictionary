@@ -19,7 +19,7 @@ module MiddleEnglishDictionary
         cite.cd       = nokonode.attr('CD') && nokonode.attr('CD').to_i
         cite.quote    = Quote.new_from_nokonode(nokonode.at('Q'), entry_id: entry_id)
         cite.bib      = Bib.new_from_nokonode(nokonode.at('BIBL'), entry_id: entry_id)
-        cite.notes    = nokonode.xpath('NOTE').map(&:text)
+        cite.notes    = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
         cite
       end
     end

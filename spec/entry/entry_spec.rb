@@ -64,6 +64,11 @@ RSpec.describe MiddleEnglishDictionary::Entry do
     it "gets all the senses" do
       expect(e.senses.count).to eq(2)
     end
+
+    # more of a deep test
+    it "gets all the citations" do
+      expect(e.all_citations.count).to eq(14)
+    end
   end
 
 end

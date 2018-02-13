@@ -23,7 +23,7 @@ module MiddleEnglishDictionary
         q.highlighted_phrases = nokonode.xpath("HI").map(&:text).uniq
         q.text                = nokonode.text
         q.xml                 = nokonode.to_xml
-        q.notes               = nokonode.xpath('NOTE').map(&:text)
+        q.notes               = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
         q
       end
 

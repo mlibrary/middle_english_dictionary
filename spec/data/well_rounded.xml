@@ -52,12 +52,10 @@
       </ORTH>
       .
     </FORM>
-    <ETYM>
-      <LANG>ON</LANG>
-      (cp. <LANG>OI</LANG>
+    <ETYM><LANG>ON</LANG>: cp. <LANG>OI</LANG>
       <HI REND="B">brand-rei&#x00F0;</HI>) &amp; <LANG>OE</LANG>
       <HI REND="B">brand|r&#x0101;d</HI>, <HI REND="B">-red(a</HI>, <HI
-            REND="B">-rida</HI>.
+              REND="B">-rida</HI>.
     </ETYM>
     <SENSE N="1">
       <DEF>(a) A grate, gridiron, or trivet for supporting cooking utensils
@@ -71,7 +69,7 @@
               <TITLE>Invent.Monk-Wear.</TITLE>in
               <TITLE>Sur.Soc.29</TITLE>
             </STNCL>
-            152
+            <SCOPE>152</SCOPE>
           </BIBL>
           <Q>In coquina..ij brandreths.</Q>
         </CIT>
@@ -82,7 +80,7 @@
               <TITLE>Will York</TITLE> in
               <TITLE>Sur.Soc.45</TITLE>
             </STNCL>
-            14
+            <SCOPE>14</SCOPE>
           </BIBL>
           <Q>j brand|ereth cum vj barrez ferri.</Q>
         </CIT>
@@ -93,7 +91,7 @@
               <TITLE>Invent.Norwich</TITLE> in
               <TITLE>Nrf.Archaeol.12</TITLE>
             </STNCL>
-            202
+            <SCOPE>202</SCOPE>
           </BIBL>
           <Q>ij pothokys, ij brendled, j fleshhok.</Q>
         </CIT>
@@ -104,7 +102,7 @@
               <TITLE>PParv.</TITLE>
               <MS>Hrl 221</MS>
             </STNCL>
-            47
+            <SCOPE>47</SCOPE>
           </BIBL>
           <Q>Brandelede [Win: braynloyde]: Tripes.</Q>
         </CIT>
@@ -115,7 +113,7 @@
               <TITLE>Thrn.Med.Bk.</TITLE>
               <MS>Thrn</MS>
             </STNCL>
-            7/29
+            <SCOPE>7/29</SCOPE>
           </BIBL>
           <Q>Tak grene &#x0292;erdis of esche &amp; lay &#x00FE;am ouer a
             brandrethe &amp; make a fire vnder &#x00FE;am.
@@ -128,7 +126,7 @@
               <TITLE>Acc.R.Dur.</TITLE>in
               <TITLE>Sur.Soc.99</TITLE>
             </STNCL>
-            89
+            <SCOPE>89</SCOPE>
           </BIBL>
           <Q>It. j magnum Brandreth cum ij costeris, et j parvum Brandreth.
           </Q>
@@ -140,7 +138,7 @@
               <TITLE>Acc.R.Dur.</TITLE>in
               <TITLE>Sur.Soc.99</TITLE>
             </STNCL>
-            244
+            <SCOPE>244</SCOPE>
           </BIBL>
           <Q>Item j brandreth cum iiijor costis ferreis. Item j brandreth
             rotun|dum.
@@ -152,7 +150,7 @@
               <DATE>(1465)</DATE>
               <TITLE>Paston</TITLE>
             </STNCL>
-            4.202
+            <SCOPE>4.202</SCOPE>
           </BIBL>
           <Q>ij rakks of yron, ij brendeletts.</Q>
         </CIT>
@@ -163,7 +161,7 @@
               <TITLE>Lndsb.Nominale</TITLE>
               <MS>Lndsb</MS>
             </STNCL>
-            769/26
+            <SCOPE>769/26</SCOPE>
           </BIBL>
           <Q>Hic tripes: a brenlede.</Q>
         </CIT>
@@ -176,7 +174,7 @@
               <TITLE>St.Eras.</TITLE>
               <MS>Add 36983</MS>
             </STNCL>
-            p.203
+            <SCOPE>p.203</SCOPE>
           </BIBL>
           <Q>&#x00DE;e xliii [passion] was brenn|yng on a brandlete bounden
             &#x00FE;erto.
@@ -194,7 +192,7 @@
               <TITLE>Indent.Catterick</TITLE> in
               <TITLE>Archaeol.J.7</TITLE>
             </STNCL>
-            57
+            <SCOPE>57</SCOPE>
           </BIBL>
           <Q>Ye branderath|es of ye pilers and of ye
             landstathes..with..othire tre werke that is nedfull to ya saide
@@ -209,14 +207,13 @@
               <TITLE>Cath.Angl.</TITLE>
               <MS>Add 15562</MS>
             </STNCL>
-            17b
+            <SCOPE>17b</SCOPE>
           </BIBL>
           <Q>Brandrethe [vr. brandryth] to sette byggyng on: lora|mentum.</Q>
         </CIT>
       </EG>
     </SENSE>
-    <supplement todo="BNI">
-
+    <supplement todo="NI">
       <EG>
         <CIT>
           <BIBL>
@@ -225,21 +222,35 @@
               in Salzman
               <TITLE>Building in Engl.</TITLE>
             </STNCL>
-            498
+            <SCOPE>498</SCOPE>
           </BIBL>
-          <Q>Ye forsaide Nich'..schall make ridde ye groundes in ye watir
-            ware ye brigge schall be..And make ye brandereth of ye ta
-            landestathe be laide befor ye fest of ye Inuencion of ye holy
+          <Q>Nich' And his falaws..schall fynd, mak, or gare make apon yair
+            own cost al manere of Tymbirwerke quilke..is nesessar'..to ye
+            saide brigg' yt is to say ye branderethes of ye pilers and of ye
+            landstathes..Ye forsaide Nich'..schall make ridde ye groundes in
+            ye watir ware ye brigg' schall be..And make ye brandereth of ye
+            ta landestathe be laide befor ye fest of ye Inuencion of ye holy
             Crosse..And ye tothir brandereth..to be laid by ye fest of ye
-            Natiuite of seint John Baptist..folowand And..schall..kepe ye
-            wat' wer' And defend it fro ye saides Th' John and Rob't to ye
-            tyme ye branderath be laid and yair work of masoncraft be passed
-            ye danger And ye noiesance of ye same said water.
+            Natiuite of seint John Baptist..And..schall..kepe ye wat' wer'
+            And defend itte fro ye saides Th' John and Rob't to ye tyme ye
+            branderath be laid and yair werke of masoncraft be passed ye
+            danger And ye noiesance of ye same said water.
           </Q>
         </CIT>
-        <NOTE>New form: Also..<HI REND="B">branderath</HI>.
+        <NOTE>New forms: Also..<HI REND="B">branderath</HI>; pl. <HI
+                REND="B">branderethes</HI>.
         </NOTE>
         <NOTE>Quot. belongs to sense 2.</NOTE>
+        <NOTE>The "brand-reths" (made of wood) here refer to cofferdams,
+          enclosures constructed to permit construction work below the
+          waterline on Catterick Bridge (at either end of the bridge and
+          around its piers).
+        </NOTE>
+        <NOTE>(Note that the first quot. in sense 2. found in <HI REND="I">
+          The Archaeological Journal
+        </HI> is from this same text, a contemporary copy on parchment of the
+          contract for building Catterick Bridge.)
+        </NOTE>
       </EG>
       <EG>
         <CIT>
@@ -249,7 +260,7 @@
               <TITLE>Invent.Lytham</TITLE> in
               <TITLE>Chet. n.s.60</TITLE>
             </STNCL>
-            80
+            <SCOPE>80</SCOPE>
           </BIBL>
           <Q>Domus brac'..j brandereth, j pare tangez, ij wyndoshetes, j
             Skele, j Shole.
@@ -257,13 +268,15 @@
         </CIT>
         <NOTE>Additional quot.</NOTE>
         <NOTE>Quot. belongs to sense 1.(a).</NOTE>
-        <NOTE>This quot. has been taken back to books.</NOTE>
       </EG>
       <NOTE>The list of variant spellings in the form section is incomplete
         and needs revision to accord with standards of later volumes of the
-        MED.--notes per MLL
+        MED. Provisional revised form section: Also <HI REND="B">brandrethe,
+          bandrith, brandereth, branderath, brandlete, brandelede, brendled,
+          brendlet, brenlede, brainloide</HI>; pl. <HI REND="B">
+          brandreths</HI>, etc. &amp; <HI REND="B">branderethes,
+          branderathes</HI>.--notes per MLL
       </NOTE>
-
     </supplement>
   </ENTRYFREE>
 </MED>

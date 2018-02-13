@@ -11,7 +11,7 @@ module MiddleEnglishDictionary
         supp          = self.new
         supp.entry_id = entry_id
         supp.egs      = nokonode.css('EG').map {|eg| EG.new_from_nokonode(eg, entry_id: entry_id)}
-        supp.notes    = nokonode.xpath('NOTE').map(&:text)
+        supp.notes    = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
         supp
       end
 

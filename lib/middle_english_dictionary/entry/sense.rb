@@ -27,7 +27,7 @@ module MiddleEnglishDictionary
 
         sense.egs = nokonode.css('EG').map {|eg| EG.new_from_nokonode(eg, entry_id: entry_id)}
 
-        sense.notes = nokonode.xpath('NOTE').map(&:text)
+        sense.notes = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
 
         sense
       end

@@ -7,16 +7,15 @@ module MiddleEnglishDictionary
     # the XML
     class Bib
 
-      attr_accessor :stencil, :scope, :xml, :entry_id, :notes
+      attr_accessor :stencil, :scope, :entry_id, :notes
 
       def self.new_from_nokonode(nokonode, entry_id: nil)
         stencil_node = nokonode.at('STNCL')
         bib          = self.new
         bib.entry_id = entry_id
         bib.stencil  = Stencil.new_from_nokonode(stencil_node, entry_id: entry_id) if stencil_node
-        bib.scope = nokonode.at('SCOPE')
-        bib.xml      = nokonode.to_xml
-        bib.notes    = nokonode.xpath('NOTE').map(&:text)
+        bib.scope = nokonode.xpath('SCOPE').map(&:text).first
+        bib.notes    = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
         bib
       end
     end
@@ -29,7 +28,6 @@ module MiddleEnglishDictionary
       property :xml
       property :stencil, decorator: StencilRepresenter, class: Stencil
       property :notes
-
     end
 
 

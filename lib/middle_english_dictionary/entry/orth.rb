@@ -22,7 +22,7 @@ module MiddleEnglishDictionary
       def self.new_from_nokonode(nokonode, entry_id: nil)
         regs  = nokonode.xpath('REG').map(&:text)
         origs = nokonode.xpath('ORIG').map(&:text)
-        notes = nokonode.xpath('NOTE').map(&:text)
+        notes = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
         self.new(regs: regs, origs: origs, entry_id: entry_id, notes: notes)
       end
 
