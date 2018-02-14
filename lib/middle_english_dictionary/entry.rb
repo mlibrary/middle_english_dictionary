@@ -64,6 +64,10 @@ module MiddleEnglishDictionary
       entry
     end
 
+    # for easier debugging
+    def pretty_xml
+      MiddleEnglishDictionary::XMLUtilities.pretty_xml(xml)
+    end
 
     # Getting headwords and forms
 
@@ -138,7 +142,7 @@ module MiddleEnglishDictionary
     end
 
     def self.from_json_file(f)
-      self.from_json(File.read(f, 'r:utf-8'))
+      self.from_json(File.open(f, 'r:utf-8').read)
     end
 
   end
