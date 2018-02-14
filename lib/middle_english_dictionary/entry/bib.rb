@@ -25,7 +25,6 @@ module MiddleEnglishDictionary
 
       property :scope
       property :entry_id
-      property :xml
       property :stencil, decorator: StencilRepresenter, class: Stencil
       property :notes
     end

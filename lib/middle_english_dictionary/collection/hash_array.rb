@@ -1,5 +1,5 @@
 module MiddleEnglishDictionary
-  module Collections
+  module Collection
     class HashArray
       include Enumerable
 

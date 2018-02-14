@@ -29,7 +29,7 @@ module MiddleEnglishDictionary
 
     def self.new_from_nokonode(nokonode)
       self.new do
-        @med_id   = nokonode.attr('sourceID')
+        @med_id   = nokonode.attr('sourceID').gsub(/(MED)0+(.*)/, "\\1\\2")
         @oed_id   = nokonode.attr('targetID')
         @med_head = nokonode.xpath('medHed').map(&:text).first
         @oed_head = nokonode.xpath('oedHed').map(&:text).first

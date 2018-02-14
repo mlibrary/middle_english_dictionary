@@ -4,6 +4,7 @@ require 'middle_english_dictionary/xml_utilities'
 require 'middle_english_dictionary/entry/orth'
 require 'middle_english_dictionary/entry/sense'
 require 'middle_english_dictionary/entry/supplement'
+require 'middle_english_dictionary/oed_link'
 require 'representable/json'
 
 module MiddleEnglishDictionary
@@ -128,6 +129,17 @@ module MiddleEnglishDictionary
       all_citations.map(&:quote)
     end
 
+    def to_json
+      EntryRepresenter.new(self).to_json
+    end
+
+    def self.from_json(j)
+      EntryRepresenter.new(self.new).from_json(j)
+    end
+
+    def self.from_json_file(f)
+      self.from_json(File.read(f, 'r:utf-8'))
+    end
 
   end
 
@@ -141,7 +153,7 @@ module MiddleEnglishDictionary
     property :etym
     property :etym_languages
     property :pos_raw
-    property :oedlink
+    property :oedlink, decorator: MiddleEnglishDictionary::OEDLinkRepresenter, class: MiddleEnglishDictionary::OEDLink
 
     property :notes
 
