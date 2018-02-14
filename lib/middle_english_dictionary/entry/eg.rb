@@ -22,7 +22,6 @@ module MiddleEnglishDictionary
       def quotes
         citations.flat_map(&:quote)
       end
-
     end
 
     class EGRepresenter < Representable::Decorator

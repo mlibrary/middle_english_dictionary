@@ -30,7 +30,7 @@ module MiddleEnglishDictionary
 
     attr_accessor :headwords, :source, :id, :sequence, :orths, :xml,
                   :etym, :etym_languages, :pos_raw, :senses, :notes,
-                  :supplements
+                  :supplements, :oedlink
 
     def self.new_from_nokonode(root_nokonode, source: nil)
       MiddleEnglishDictionary::XMLUtilities.case_raise_all_tags!(root_nokonode)
@@ -141,6 +141,7 @@ module MiddleEnglishDictionary
     property :etym
     property :etym_languages
     property :pos_raw
+    property :oedlink
 
     property :notes
 
