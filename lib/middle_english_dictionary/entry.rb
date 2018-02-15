@@ -39,7 +39,7 @@ module MiddleEnglishDictionary
       entry_nokonode = root_nokonode.at(ROOT_XPATHS[:entry])
 
       entry        = self.new
-      entry.source = source
+      entry.source = Pathname.new(source).basename
       entry.xml    = entry_nokonode.to_xml
 
       entry.id       = entry_nokonode.attr('ID')
