@@ -21,7 +21,7 @@ module MiddleEnglishDictionary
         stencil.rid                 = nokonode.attr('RID')
         stencil.date                = nokonode.xpath('DATE').map(&:text).first
         stencil.highlighted_phrases = nokonode.css('HI').map(&:text).uniq
-        stencil.title               = nokonode.xpath('TITLE').map(&:text).first
+        stencil.title               = nokonode.xpath('TITLE').map(&:text)
         stencil.ms                  = nokonode.xpath('MS').map(&:text).first
         stencil.notes               = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
         stencil
