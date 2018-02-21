@@ -13,7 +13,7 @@ module MiddleEnglishDictionary
         stencil_node = nokonode.at('STNCL')
         bib          = self.new
         bib.entry_id = entry_id
-        bib.stencil  = Stencil.new_from_nokonode(stencil_node, entry_id: entry_id) if stencil_node
+        bib.stencil  = Stencil.new_from_nokonode(stencil_node, entry_id: entry_id)
         bib.scope = nokonode.xpath('SCOPE').map(&:text).first
         bib.notes    = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
         bib
