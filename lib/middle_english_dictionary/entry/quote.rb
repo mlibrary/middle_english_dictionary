@@ -18,8 +18,6 @@ module MiddleEnglishDictionary
         q.entry_id = entry_id
 
         q.titles              = nokonode.xpath("TITLE").map(&:text).uniq
-        q.added               = nokonode.xpath("ADDED").map(&:text).uniq
-        q.ovars               = nokonode.xpath("OVARS").map(&:text).uniq
         q.highlighted_phrases = nokonode.xpath("HI").map(&:text).uniq
         q.text                = nokonode.text
         q.xml                 = nokonode.to_xml
@@ -34,8 +32,6 @@ module MiddleEnglishDictionary
 
       property :entry_id
       property :titles
-      property :added
-      property :ovars
       property :highlighted_phrases
       property :text
       property :xml
