@@ -129,8 +129,16 @@ module MiddleEnglishDictionary
       [senses, supplements].flatten.flat_map(&:egs).flat_map(&:citations)
     end
 
+    def all_bibs
+      all_citations.map(&:bib)
+    end
+
     def all_quotes
       all_citations.map(&:quote)
+    end
+
+    def all_stencils
+      all_bibs.map(&:stencil)
     end
 
     def to_json
