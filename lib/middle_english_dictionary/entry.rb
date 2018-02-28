@@ -162,7 +162,7 @@ module MiddleEnglishDictionary
     property :source
     property :sequence
     property :xml
-    property :etym
+    property :etym_xml
     property :etym_languages
     property :pos_raw
     property :oedlink, decorator: MiddleEnglishDictionary::OEDLinkRepresenter, class: MiddleEnglishDictionary::OEDLink
