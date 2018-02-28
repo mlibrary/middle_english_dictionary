@@ -30,7 +30,7 @@ module MiddleEnglishDictionary
 
 
     attr_accessor :headwords, :source, :id, :sequence, :orths, :xml,
-                  :etym, :etym_languages, :pos_raw, :senses, :notes,
+                  :etym_xml, :etym_languages, :pos_raw, :senses, :notes,
                   :supplements, :oedlink
 
     def self.new_from_nokonode(root_nokonode, source: nil)
@@ -48,7 +48,7 @@ module MiddleEnglishDictionary
       entry.headwords = entry.derive_headwords(entry_nokonode)
       entry.orths     = entry.derive_orths(entry_nokonode)
 
-      entry.etym           = if etym_node = entry_nokonode.at(ENTRY_XPATHS[:etym])
+      entry.etym_xml       = if etym_node = entry_nokonode.at(ENTRY_XPATHS[:etym])
                                etym_node.to_xml
                              else
                                nil
@@ -60,7 +60,7 @@ module MiddleEnglishDictionary
       entry.senses      = entry_nokonode.xpath('SENSE').map {|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
       entry.supplements = entry_nokonode.xpath('SUPPLEMENT').map {|supp| Supplement.new_from_nokonode(supp, entry_id: entry.id)}
 
-      entry.notes = entry_nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
+      entry.notes = entry_nokonode.xpath('NOTE').map(&:text).map {|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
       entry
     end
 
