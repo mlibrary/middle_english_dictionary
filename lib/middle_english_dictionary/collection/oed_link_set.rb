@@ -12,7 +12,6 @@ module MiddleEnglishDictionary
         oedlist = self.new
         dir     = Pathname.new(dirstring)
         dir.children.select{|f| f.to_s =~ /links_.*\.xml/}.each do |f|
-          puts "Loading OED entries from #{f}"
           xml = File.read(f).encode("UTF-8", "Windows-1252")
           Nokogiri::XML(xml).xpath('/links/link').each do |linknode|
             oedlink                 = MiddleEnglishDictionary::OEDLink.new_from_nokonode(linknode)
