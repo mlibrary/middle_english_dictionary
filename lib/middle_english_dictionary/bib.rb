@@ -1,10 +1,8 @@
 module MiddleEnglishDictionary
   class Bib
 
-    attr_accessor :title, :ipmep, :cite, :lalme,
-                  :manuscripts,
-                  :stencil_lists
+    attr_accessor :title, :ipmep,
+                  :severs, :mslist,
 
   end
 end
-e

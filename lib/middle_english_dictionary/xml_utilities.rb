@@ -3,6 +3,28 @@ require 'nokogiri'
 module MiddleEnglishDictionary
   module XMLUtilities
 
+
+    def self.arities(doc, xpath)
+      h = Hash.new {|h, k| h[k] = {}}
+
+      nodes = doc.xpath(xpath)
+
+      kids = nodes.flat_map(&:children).flat_map(&:name).uniq - ['text']
+
+      kids.each do |k|
+        nodes.each do |x|
+          h[k][x.xpath(k).count] = true
+        end
+      end
+
+      h.keys.sort.inject({}) do |acc, k|
+        arities = h[k].keys
+        acc[k]  = [arities.min, arities.max]
+        acc
+      end
+
+    end
+
     def self.case_raise_all_tags!(node)
       node.traverse {|node| node.name = node.name.upcase if node.class == Nokogiri::XML::Element}
       nil

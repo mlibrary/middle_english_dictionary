@@ -1,6 +1,6 @@
 require 'nokogiri'
 require 'delegate'
-require 'middle_english_dictionary/bib/ms'
+require 'middle_english_dictionary/bib/ms_full'
 
 module MiddleEnglishDictionary
   module Collection
@@ -16,7 +16,7 @@ module MiddleEnglishDictionary
         nokonode.xpath('HYPERMED/MSLIB/MSFULL').each do |ms|
           code = ms.attr('MS')
           title = ms.text.strip
-          msnames[code] = MiddleEnglishDictionary::Bib::MS.new(code, title)
+          msnames[code] = MiddleEnglishDictionary::Bib::MSFull.new(code, title)
         end
       end
 

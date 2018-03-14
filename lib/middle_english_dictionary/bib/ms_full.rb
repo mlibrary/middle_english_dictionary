@@ -1,6 +1,6 @@
 module MiddleEnglishDictionary
   class Bib
-    class MS
+    class MSFull
       attr_accessor :code, :title
 
       def initialize(code = nil, title = nil)
