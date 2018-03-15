@@ -18,6 +18,7 @@ module MiddleEnglishDictionary
           title = ms.text.strip
           msnames[code] = MiddleEnglishDictionary::Bib::MSFull.new(code, title)
         end
+        msnames
       end
 
       def self.new_from_xml_file(filename)
