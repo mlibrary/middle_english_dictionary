@@ -65,32 +65,39 @@ module MiddleEnglishDictionary
     end
 
     # for easier debugging
+    # @return [String] Nicely formatted XML of the whole entry
     def pretty_xml
       MiddleEnglishDictionary::XMLUtilities.pretty_xml(xml)
     end
 
     # Getting headwords and forms
 
+    # @return [Array<String>] The "original" (in the paper dictionary) spelling(s)
     def original_headwords
       headwords.flat_map(&:origs).uniq
     end
 
+    # @return [Array<String>] Headwords with a regularized spelling and no extra punctuation
     def regularized_headwords
       headwords.flat_map(&:regs)
     end
 
+    # @return [Array<String>] All given spellings of the headword(s)
     def all_headword_forms
       headwords.flat_map(&:all_forms).uniq
     end
 
+    # @return [Array<String>] Original presentation of the non-headword form(s)
     def original_orths
       orths.flat_map(&:origs).uniq
     end
 
+    # @return [Array<String>] Regularized presentation of the non-headword form(s)
     def regularized_orths
       orths.flat_map(&:regs)
     end
 
+    # @return [Array<String>] All given spellings (original and regular) of the non-headwords
     def all_orth_forms
       orths.flat_map(&:all_forms).uniq
     end
@@ -103,6 +110,8 @@ module MiddleEnglishDictionary
       regularized_headwords.concat(regularized_orths).uniq
     end
 
+
+    # @return [Array<String>] All given spellings (original and regular) of the entry
     def all_forms
       all_original_forms.concat(all_regularized_forms).uniq
     end
@@ -120,41 +129,58 @@ module MiddleEnglishDictionary
 
     # Part of speech
     #
+    # @param [String] pos_raw The raw (unfixed) part of speech
+    # @return [String] A hopefully normalized version (e.g., '(n.(1))' should just become 'n')
     def normalized_pos_raw(pos_raw = self.pos_raw)
       pos_raw.downcase.gsub(/\s*\(\d\)\s*\Z/, '').gsub(/\.+\s*\Z/, '').gsub(/\./, ' ')
     end
 
     # Citations from the sense(s) and the supplement(s)
+    # @return [Array<Citation>] All the citations in the entry, from senses AND supplements
     def all_citations
       [senses, supplements].flatten.flat_map(&:egs).flat_map(&:citations)
     end
 
+    # @return [Array<Bib>] All the bibs from all the citations
     def all_bibs
       all_citations.map(&:bib)
     end
 
+    # @return [Array<Quote>] All the quotes from all the citations
     def all_quotes
       all_citations.map(&:quote)
     end
 
+    # Return the Stencil object. A stencil is the citation proper: title,
+    # date, manuscript, etc.
+    # @return [Array<Stencil>] all the stencils from all the bibs
     def all_stencils
       all_bibs.map(&:stencil)
     end
 
+    # Provide a JSON representation of this object and all its sub-objects
+    # @return [String] json for this object
     def to_json
       EntryRepresenter.new(self).to_json
     end
 
+    # Re-hydrate
+    # @param [String] Valid json as produced by #to_json
+    # @return [Entry] A re-hydrated entry
     def self.from_json(j)
       EntryRepresenter.new(self.new).from_json(j)
     end
 
+    # @param [String] filename with Entry json in it
+    # @return [Entry] A re-hydrated Entry
     def self.from_json_file(f)
       self.from_json(File.open(f, 'r:utf-8').read)
     end
 
   end
 
+  # Utility class to provide facilities to round trip between Entry
+  # objects and json representations of those objects
   class EntryRepresenter < Representable::Decorator
     include Representable::JSON
 
