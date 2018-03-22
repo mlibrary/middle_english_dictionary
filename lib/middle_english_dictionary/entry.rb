@@ -165,13 +165,13 @@ module MiddleEnglishDictionary
     end
 
     # Re-hydrate
-    # @param [String] Valid json as produced by #to_json
+    # @param [String] j Valid json as produced by #to_json
     # @return [Entry] A re-hydrated entry
     def self.from_json(j)
       EntryRepresenter.new(self.new).from_json(j)
     end
 
-    # @param [String] filename with Entry json in it
+    # @param [String] f filename with Entry json in it
     # @return [Entry] A re-hydrated Entry
     def self.from_json_file(f)
       self.from_json(File.open(f, 'r:utf-8').read)
