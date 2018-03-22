@@ -21,8 +21,6 @@ module MiddleEnglishDictionary
         sense.sense_number    = (nokonode.attr('N') || 0).to_i
 
         sense.entry_id = entry_id
-
-        sense.grammatical_usages = sense.get_grammatical_usages(nokonode)
         sense.discipline_usages  = sense.get_discipline_usages(nokonode)
 
         sense.egs = nokonode.css('EG').map {|eg| EG.new_from_nokonode(eg, entry_id: entry_id)}
