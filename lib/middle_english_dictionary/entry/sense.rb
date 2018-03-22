@@ -36,10 +36,6 @@ module MiddleEnglishDictionary
         nokonode.xpath('//DEF/USG[@TYPE="FIELD"]').map {|n| n.attr('EXPAN')}.map(&:capitalize).uniq
       end
 
-      def get_grammatical_usages(nokonode)
-        nokonode.xpath('//DEF/USG[@TYPE="GRAM"]').map(&:text).map(&:strip).uniq
-      end
-
     end
 
     class SenseRepresenter < Representable::Decorator
@@ -49,7 +45,6 @@ module MiddleEnglishDictionary
       property :definition_xml
       property :definition_text
       property :sense_number
-      property :grammatical_usages
       property :discipline_usages
       collection :egs, decorator: EGRepresenter, class: EG
       property :notes
