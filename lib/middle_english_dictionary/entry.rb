@@ -29,9 +29,19 @@ module MiddleEnglishDictionary
     }
 
 
-    attr_accessor :headwords, :source, :id, :sequence, :orths, :xml,
-                  :etym_xml, :etym_languages, :pos_raw, :senses, :notes,
-                  :supplements, :oedlink
+    attr_accessor :headwords
+    attr_accessor :source
+    attr_accessor :id
+    attr_accessor :sequence
+    attr_accessor :orths
+    attr_accessor :xml
+    attr_accessor :etym_xml
+    attr_accessor :etym_languages
+    attr_accessor :pos_raw
+    attr_accessor :senses
+    attr_accessor :notes
+    attr_accessor :supplements
+    attr_accessor :oedlink
 
     def self.new_from_nokonode(root_nokonode, source: nil)
       MiddleEnglishDictionary::XMLUtilities.case_raise_all_tags!(root_nokonode)
