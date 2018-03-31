@@ -21,9 +21,13 @@ module MiddleEnglishDictionary
         oedlist
       end
 
+      def self.from_xml(xml)
+        self.from_nokonode(Nokogiri::XML(xml))
+      end
+
       def self.from_xml_file(filename)
         xml     = File.read(filename).encode("UTF-8", "ISO-8859-1")
-        self.from_nokonode(Nokogiri::XML(xml))
+        self.from_xml(xml)
       end
     end
   end
