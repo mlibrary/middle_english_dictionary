@@ -60,11 +60,11 @@ module MiddleEnglishDictionary
       entry.orths     = entry.derive_orths(entry_nokonode)
 
       if etym_node = entry_nokonode.at(ENTRY_XPATHS[:etym])
-        entry.etym_xml = etym_node.to_xml
-        entry.etym_text = etym_node.text
+        entry.etym_xml = etym_node.map(&:to_xml)
+        entry.etym_text = entry_nokonode.xpath(ENTRY_XPATHS[:etym]).map(&:text)
       end
 
-      entry.etym = entry_nokonode.xpath(ENTRY_XPATHS[:etym]).map(&:text)
+
       entry.etym_languages = entry_nokonode.xpath(ENTRY_XPATHS[:etym_languages]).map(&:text).map(&:upcase)
 
       entry.pos_raw = entry_nokonode.at(ENTRY_XPATHS[:pos]).text
