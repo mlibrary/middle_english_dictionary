@@ -36,6 +36,7 @@ module MiddleEnglishDictionary
     attr_accessor :orths
     attr_accessor :xml
     attr_accessor :etym_xml
+    attr_accessor :etym_text
     attr_accessor :etym_languages
     attr_accessor :pos_raw
     attr_accessor :senses
@@ -58,11 +59,12 @@ module MiddleEnglishDictionary
       entry.headwords = entry.derive_headwords(entry_nokonode)
       entry.orths     = entry.derive_orths(entry_nokonode)
 
-      entry.etym_xml       = if etym_node = entry_nokonode.at(ENTRY_XPATHS[:etym])
-                               etym_node.to_xml
-                             else
-                               nil
-                             end
+      if etym_node = entry_nokonode.at(ENTRY_XPATHS[:etym])
+        entry.etym_xml = etym_node.map(&:to_xml)
+        entry.etym_text = entry_nokonode.xpath(ENTRY_XPATHS[:etym]).map(&:text)
+      end
+
+
       entry.etym_languages = entry_nokonode.xpath(ENTRY_XPATHS[:etym_languages]).map(&:text).map(&:upcase)
 
       entry.pos_raw = entry_nokonode.at(ENTRY_XPATHS[:pos]).text
@@ -199,6 +201,7 @@ module MiddleEnglishDictionary
     property :sequence
     property :xml
     property :etym_xml
+    property :etym_text
     property :etym_languages
     property :pos_raw
     property :oedlink, decorator: MiddleEnglishDictionary::OEDLinkRepresenter, class: MiddleEnglishDictionary::OEDLink

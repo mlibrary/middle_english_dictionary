@@ -7,11 +7,13 @@ module MiddleEnglishDictionary
 
       attr_accessor :egs, :notes, :entry_id, :xml
 
+
       def self.new_from_nokonode(nokonode, entry_id: nil)
         supp          = self.new
         supp.entry_id = entry_id
         supp.egs      = nokonode.css('EG').map {|eg| EG.new_from_nokonode(eg, entry_id: entry_id)}
-        supp.notes    = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
+        supp.notes    = nokonode.xpath('NOTE').map(&:text).map {|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
+        supp.xml      = nokonode.to_xml
         supp
       end
 
