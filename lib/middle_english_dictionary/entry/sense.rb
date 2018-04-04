@@ -31,7 +31,7 @@ module MiddleEnglishDictionary
       end
 
       def get_discipline_usages(nokonode)
-        nokonode.xpath('//DEF/USG[@TYPE="FIELD"]').map {|n| n.attr('EXPAN')}.map(&:capitalize).uniq
+        nokonode.xpath('//DEF/USG[@TYPE="FIELD"]/@EXPAN').map {|n| n.attr('EXPAN')}.map(&:capitalize).uniq
       end
 
     end
