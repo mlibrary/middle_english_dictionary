@@ -12,8 +12,8 @@ module MiddleEnglishDictionary
 
 
       def new_from_xml_file(filename)
-        raise MiddleEnglishDictionary::FileNotFound.new("File '#{source}' not found") unless File.exists?(filename)
-        raise MiddleEnglishDictionary::FileEmpty.new("File '#{source}' is empty") if File.empty?(filename)
+        raise MiddleEnglishDictionary::FileNotFound.new("File '#{filename}' not found") unless File.exists?(filename)
+        raise MiddleEnglishDictionary::FileEmpty.new("File '#{filename}' is empty") if File.empty?(filename)
         new_from_xml(File.open(filename, 'r:utf-8').read, source: filename)
       end
     end
