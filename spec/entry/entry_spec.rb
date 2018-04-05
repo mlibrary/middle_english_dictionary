@@ -58,7 +58,7 @@ RSpec.describe MiddleEnglishDictionary::Entry do
     end
 
     it "finds the etym languages" do
-      expect(e.etym_languages).to eq(['ON', 'OI', 'OE'])
+      expect(e.etym_languages).to eq(["Old Norse", "Old Icelandic", "Old English"])
     end
 
     it "gets all the senses" do
