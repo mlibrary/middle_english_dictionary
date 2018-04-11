@@ -22,7 +22,7 @@ module MiddleEnglishDictionary
     ENTRY_XPATHS = {
       hdorth:         'FORM/HDORTH',
       other_orth:     'FORM/ORTH',
-      pos:            'FORM/POS',
+      pos:            'FORM/POS/PS/@EXPAN',
       etym:           'ETYM',
       etym_languages: 'ETYM/LANG/LG/@EXPAN',
       sense:          'SENSE'
@@ -38,7 +38,7 @@ module MiddleEnglishDictionary
     attr_accessor :etym_xml
     attr_accessor :etym_text
     attr_accessor :etym_languages
-    attr_accessor :pos_raw
+    attr_accessor :pos
     attr_accessor :senses
     attr_accessor :notes
     attr_accessor :supplements
@@ -67,7 +67,7 @@ module MiddleEnglishDictionary
 
       entry.etym_languages = entry_nokonode.xpath(ENTRY_XPATHS[:etym_languages]).map(&:value)
 
-      entry.pos_raw = entry_nokonode.at(ENTRY_XPATHS[:pos]).text
+      entry.pos = entry_nokonode.xpath(ENTRY_XPATHS[:pos]).map(&:value)
 
       entry.senses      = entry_nokonode.xpath('SENSE').map {|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
       entry.supplements = entry_nokonode.xpath('SUPPLEMENT').map {|supp| Supplement.new_from_nokonode(supp, entry_id: entry.id)}
@@ -139,14 +139,6 @@ module MiddleEnglishDictionary
     end
 
 
-    # Part of speech
-    #
-    # @param [String] pos_raw The raw (unfixed) part of speech
-    # @return [String] A hopefully normalized version (e.g., '(n.(1))' should just become 'n')
-    def normalized_pos_raw(pos_raw = self.pos_raw)
-      pos_raw.downcase.gsub(/\s*\(\d\)\s*\Z/, '').gsub(/\.+\s*\Z/, '').gsub(/\./, ' ')
-    end
-
     # Citations from the sense(s) and the supplement(s)
     # @return [Array<Citation>] All the citations in the entry, from senses AND supplements
     def all_citations
@@ -203,7 +195,7 @@ module MiddleEnglishDictionary
     property :etym_xml
     property :etym_text
     property :etym_languages
-    property :pos_raw
+    property :pos
     property :oedlink, decorator: MiddleEnglishDictionary::OEDLinkRepresenter, class: MiddleEnglishDictionary::OEDLink
 
     property :notes
