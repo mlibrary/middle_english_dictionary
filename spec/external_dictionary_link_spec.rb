@@ -1,5 +1,5 @@
-require 'middle_english_dictionary/oed_link'
-MEDO = MiddleEnglishDictionary::OEDLink
+require 'middle_english_dictionary/external_dictionary_link'
+MEDO = MiddleEnglishDictionary::ExternalDictionaryLink
 
 RSpec.describe MiddleEnglishDictionary::Entry do
 

@@ -4,7 +4,7 @@ require 'middle_english_dictionary/xml_utilities'
 require 'middle_english_dictionary/entry/orth'
 require 'middle_english_dictionary/entry/sense'
 require 'middle_english_dictionary/entry/supplement'
-require 'middle_english_dictionary/oed_link'
+require 'middle_english_dictionary/external_dictionary_link'
 require 'representable/json'
 
 module MiddleEnglishDictionary
@@ -17,16 +17,17 @@ module MiddleEnglishDictionary
     extend Entry::ClassMethods
     ROOT_XPATHS = {
       entry: '/MED/ENTRYFREE',
-    }
+    }.freeze
 
     ENTRY_XPATHS = {
       hdorth:         'FORM/HDORTH',
       other_orth:     'FORM/ORTH',
-      pos:            'FORM/POS/PS/@EXPAN',
+      pos_facet:      'FORM/POS/PS/@EXPAN',
+      pos:            'FORM/POS',
       etym:           'ETYM',
       etym_languages: 'ETYM/LANG/LG/@EXPAN',
       sense:          'SENSE'
-    }
+    }.freeze
 
 
     attr_accessor :headwords
@@ -39,10 +40,12 @@ module MiddleEnglishDictionary
     attr_accessor :etym_text
     attr_accessor :etym_languages
     attr_accessor :pos
+    attr_accessor :pos_facet
     attr_accessor :senses
     attr_accessor :notes
     attr_accessor :supplements
-    attr_accessor :oedlink
+    attr_accessor :oedlinks
+    attr_accessor :doelinks
 
     def self.new_from_nokonode(root_nokonode, source: nil)
       MiddleEnglishDictionary::XMLUtilities.case_raise_all_tags!(root_nokonode)
@@ -60,14 +63,15 @@ module MiddleEnglishDictionary
       entry.orths     = entry.derive_orths(entry_nokonode)
 
       if etym_node = entry_nokonode.at(ENTRY_XPATHS[:etym])
-        entry.etym_xml = etym_node.to_xml
+        entry.etym_xml  = etym_node.to_xml
         entry.etym_text = etym_node.text
       end
 
 
       entry.etym_languages = entry_nokonode.xpath(ENTRY_XPATHS[:etym_languages]).map(&:value)
 
-      entry.pos = entry_nokonode.xpath(ENTRY_XPATHS[:pos]).map(&:value)
+      entry.pos = entry_nokonode.at(ENTRY_XPATHS[:pos]).text
+      entry.pos_facet = entry_nokonode.xpath(ENTRY_XPATHS[:pos_facet]).map(&:value)
 
       entry.senses      = entry_nokonode.xpath('SENSE').map {|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
       entry.supplements = entry_nokonode.xpath('SUPPLEMENT').map {|supp| Supplement.new_from_nokonode(supp, entry_id: entry.id)}
@@ -195,8 +199,12 @@ module MiddleEnglishDictionary
     property :etym_xml
     property :etym_text
     property :etym_languages
+
     property :pos
-    property :oedlink, decorator: MiddleEnglishDictionary::OEDLinkRepresenter, class: MiddleEnglishDictionary::OEDLink
+    property :pos_facet
+
+    property :oedlinks, decorator: MiddleEnglishDictionary::ExternalDictionaryLinkRepresenter, class: MiddleEnglishDictionary::ExternalDictionaryLink
+    property :doelinks, decorator: MiddleEnglishDictionary::ExternalDictionaryLinkRepresenter, class: MiddleEnglishDictionary::ExternalDictionaryLink
 
     property :notes
 

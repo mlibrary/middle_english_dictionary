@@ -22,6 +22,12 @@ module MiddleEnglishDictionary
         cite.notes    = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
         cite
       end
+
+      # Provide a JSON representation of this object and all its sub-objects
+      # @return [String] json for this object
+      def to_json
+        CitationRepresenter.new(self).to_json
+      end
     end
 
     class CitationRepresenter < Representable::Decorator
