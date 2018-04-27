@@ -9,7 +9,7 @@ module MiddleEnglishDictionary
     # (cd) and the year this particular manuscript is from (md)
     class Citation
 
-      attr_accessor :quote, :cd, :md, :bib, :xml, :entry_id, :notes
+      attr_accessor :quote, :cd, :md, :bib, :xml, :entry_id, :notes, :text
 
       # @param [Nokogiri::XML::Element] nokonode The nokogiri node for this element
       def self.new_from_nokonode(nokonode, entry_id: nil)
@@ -20,6 +20,8 @@ module MiddleEnglishDictionary
         cite.quote    = Quote.new_from_nokonode(nokonode.at('Q'), entry_id: entry_id)
         cite.bib      = Bib.new_from_nokonode(nokonode.at('BIBL'), entry_id: entry_id)
         cite.notes    = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
+        cite.text = nokonode.text
+        cite.xml = nokonode.to_xml
         cite
       end
 
@@ -39,6 +41,8 @@ module MiddleEnglishDictionary
       property :quote, decorator: QuoteRepresenter, class: Quote
       property :bib, decorator: BibRepresenter, class: Bib
       property :notes
+      property :text
+      property :xml
 
     end
 
