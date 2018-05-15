@@ -36,7 +36,9 @@ module MiddleEnglishDictionary
                   :jolliffes,
                   :notes, # can contain a hyperbib stencil
                   :severs,
-                  :wells
+                  :wells,
+                  :author, # if present in AUTHOR tags
+                  :author_sort # either SORT on <AUTHOR> or just the AUTHOR
 
     # An MSLIST only contains MS (manuscript) tags, so well just store them
     attr_accessor :manuscripts
@@ -77,6 +79,17 @@ module MiddleEnglishDictionary
       bib.title_xml = nokonode.at('TITLE').inner_html # really  inner_xml in this case
       bib.title_text = nokonode.at('TITLE').text
 
+      # Author
+      authornode = nokonode.xpath('AUTHOR').first
+      if authornode
+        bib.author = authornode.text
+        bib.author_sort = authornode.attr('SORT') || bib.author
+      end
+
+      # Manuscripts
+      nokonode.xpath('MSLIST/MS').each do |msnode|
+
+      end
 
       bib
 
