@@ -11,6 +11,7 @@ module MiddleEnglishDictionary
         @ref = nokonode.attr('REF')
 
 
+
       end
 
     end
