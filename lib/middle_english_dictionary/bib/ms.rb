@@ -6,6 +6,7 @@ module MiddleEnglishDictionary
                     :pref,
                     :cite,
                     :lalme,
+                    :lalme_regions
                     :title
 
       def initialize(nokonode)
@@ -28,6 +29,7 @@ module MiddleEnglishDictionary
                  else
                    nil
                  end
+        @lalme_regions = nokonode.xpath('/LALME/REGION').map{|x| x.attr('EXPAN')}
       end
     end
   end
