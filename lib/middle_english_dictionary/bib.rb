@@ -1,4 +1,6 @@
 require 'nokogiri'
+require_relative 'bib/ms'
+
 
 # AUTHOR           0    1
 # COMMENT          0    1
@@ -38,7 +40,8 @@ module MiddleEnglishDictionary
                   :severs,
                   :wells,
                   :author, # if present in AUTHOR tags
-                  :author_sort # either SORT on <AUTHOR> or just the AUTHOR
+                  :author_sort, # either SORT on <AUTHOR> or just the AUTHOR
+                  :hyps # HYP... ids
 
     # An MSLIST only contains MS (manuscript) tags, so well just store them
     attr_accessor :manuscripts
@@ -87,9 +90,10 @@ module MiddleEnglishDictionary
       end
 
       # Manuscripts
-      nokonode.xpath('MSLIST/MS').each do |msnode|
+      bib.manuscripts = nokonode.xpath('MSLIST/MS').map{|n| MiddleEnglishDictionary::Bib::MS.new(n)}
 
-      end
+      # Linktos
+      bib.hyps = nokonode.css('STENCIL').map{|x| x.attr('ID')}.compact.uniq
 
       bib
 

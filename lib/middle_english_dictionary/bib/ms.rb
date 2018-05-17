@@ -5,15 +5,30 @@ module MiddleEnglishDictionary
       attr_accessor :ref,
                     :pref,
                     :cite,
-                    :lalme
+                    :lalme,
+                    :title
 
       def initialize(nokonode)
         @ref = nokonode.attr('REF')
-
-
-
+        @pref = case nokonode.attr('PREF')
+                when 'Y'
+                  :all
+                when 'PART'
+                  :part
+                else
+                  nil
+                end
+        @cite = if c = nokonode.xpath('/CITE').map(&:text).first and !c.empty?
+                  c
+                else
+                  nil
+                end
+        @lalme = if l = nokonode.xpath('/LALME').map(&:text).first and !l.empty?
+                   l
+                 else
+                   nil
+                 end
       end
-
     end
   end
 end
