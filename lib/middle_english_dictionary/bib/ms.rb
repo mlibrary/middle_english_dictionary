@@ -19,17 +19,17 @@ module MiddleEnglishDictionary
                 else
                   nil
                 end
-        @cite = if c = nokonode.xpath('/CITE').map(&:text).first and !c.empty?
+        @cite = if c = nokonode.xpath('CITE').map(&:text).first and !c.empty?
                   c
                 else
                   nil
                 end
-        @lalme = if l = nokonode.xpath('/LALME').map(&:text).first and !l.empty?
+        @lalme = if l = nokonode.xpath('LALME').map(&:text).first and !l.empty?
                    l
                  else
                    nil
                  end
-        @lalme_regions = nokonode.xpath('/LALME/REGION').map{|x| x.attr('EXPAN')}
+        @lalme_regions = nokonode.xpath('LALME/REGION').map{|x| x.attr('EXPAN')}
       end
     end
   end
