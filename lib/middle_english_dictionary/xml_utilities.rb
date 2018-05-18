@@ -25,6 +25,20 @@ module MiddleEnglishDictionary
 
     end
 
+    def self.enclose_run_of_tags!(node:, enclosing_node_string:, tagname:)
+      iter = node.children.select{|x| !x.text? or x.text =~ /\S/}.enum_for(:each )
+      loop do
+        n = iter.next
+        if n.name == tagname
+          y = n.add_previous_sibling(enclosing_node_string).first
+          while n.name == tagname
+            n.parent = y
+            n = iter.next
+          end
+        end
+      end
+    end
+
     def self.case_raise_all_tags!(node)
       node.traverse {|node| node.name = node.name.upcase if node.class == Nokogiri::XML::Element}
       nil

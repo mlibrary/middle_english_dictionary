@@ -1,5 +1,6 @@
 require 'nokogiri'
 require_relative 'bib/ms'
+require_relative 'xml_utilities'
 
 
 # AUTHOR           0    1
@@ -60,7 +61,12 @@ module MiddleEnglishDictionary
       # First, verify that we've got something that looks like an entry
       raise "Node doesn't look like HYPERMED/ENTRY node" unless looks_like_an_entry_node(nokonode)
 
-      # nab the XML? At least for now
+      # It's a pain in the but to deal with mixed content. Let's wrap
+      # all the MSGROUP/STG elements in a <div class="stg-list">
+
+      enclose_tagruns!(nokonode)
+
+      # nab the transformed
       bib.xml = nokonode.to_xml
 
       # Zero or 1 author
@@ -97,6 +103,20 @@ module MiddleEnglishDictionary
 
       bib
 
+    end
+
+
+    def self.enclose_tagruns!(nokonode)
+      enc = '<stglist>'
+      nokonode.xpath('.//MSGROUP').each do |n|
+        MiddleEnglishDictionary::XMLUtilities.enclose_run_of_tags!(node: n, enclosing_node_string: enc, tagname: 'STG')
+      end
+
+      # Same with VARGROUP/VARIANT/SHORTSTENCIL
+      enc = '<shortstencillist>'
+      nokonode.xpath('.//VARGROUP/VARIANT').each do |n|
+        MiddleEnglishDictionary::XMLUtilities.enclose_run_of_tags!(node: n, enclosing_node_string: enc, tagname: 'SHORTSTENCIL')
+      end
     end
 
 
