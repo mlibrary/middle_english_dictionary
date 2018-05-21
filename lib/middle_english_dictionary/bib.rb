@@ -1,6 +1,8 @@
 require 'nokogiri'
 require_relative 'bib/ms'
 require_relative 'xml_utilities'
+require 'representable/json'
+
 
 
 # AUTHOR           0    1
@@ -32,7 +34,8 @@ module MiddleEnglishDictionary
     attr_accessor :author
 
     # Any number.
-    attr_accessor :comment, # might have internal tags
+    attr_accessor :id,
+                  :comment, # might have internal tags
                   :eedition, # Tag is E-EDITION; internal structure
                   :indexes, :indexbs, :indexcs,
                   :ipmeps,
@@ -58,16 +61,20 @@ module MiddleEnglishDictionary
     def self.new_from_nokonode(nokonode)
 
       bib = self.new
+
       # First, verify that we've got something that looks like an entry
       raise "Node doesn't look like HYPERMED/ENTRY node" unless looks_like_an_entry_node(nokonode)
 
-      # It's a pain in the but to deal with mixed content. Let's wrap
-      # all the MSGROUP/STG elements in a <div class="stg-list">
+      # It's a pain in the butt to deal with mixed content. Let's wrap
+      # problematic runs of tags so the XSLT is easier.
 
       enclose_tagruns!(nokonode)
 
       # nab the transformed
       bib.xml = nokonode.to_xml
+
+      # Get the ID
+      bib.id = nokonode.attr('ID')
 
       # Zero or 1 author
       bib.author = nokonode.xpath('AUTHOR').map(&:text).first
@@ -123,6 +130,35 @@ module MiddleEnglishDictionary
     def self.looks_like_an_entry_node(nokonode)
       nokonode.name == 'ENTRY' and
           ['TITLE', 'STENCILLIST'] - nokonode.children.map(&:name) == []
+    end
+
+
+    # JSON representation
+    class BibRepresenter < Representable::Decorator
+      include Representable::JSON
+
+      property :id
+      property :comment
+      property :indexes
+      property :indexbs
+      property :indexcs
+
+      property :ipmeps
+      property :jolliffes
+      property :wells
+      property :severs
+
+      property :xml
+
+      property :author
+      property :author_sort
+      property :hyps
+
+      collection :manuscripts,
+                 decorator: MiddleEnglishDictionary::Bib::MSRepresenter,
+                 class: MiddleEnglishDictionary::Bib::MS
+
+
     end
 
 
