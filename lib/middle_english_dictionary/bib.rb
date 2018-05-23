@@ -132,6 +132,25 @@ module MiddleEnglishDictionary
           ['TITLE', 'STENCILLIST'] - nokonode.children.map(&:name) == []
     end
 
+    # Provide a JSON representation of this object and all its sub-objects
+    # @return [String] json for this object
+    def to_json
+      BibRepresenter.new(self).to_json
+    end
+
+    # Re-hydrate
+    # @param [String] j Valid json as produced by #to_json
+    # @return [Entry] A re-hydrated entry
+    def self.from_json(j)
+      BibRepresenter.new(self.new).from_json(j)
+    end
+
+    # @param [String] f filename with Bib json in it
+    # @return [Entry] A re-hydrated Entry
+    def self.from_json_file(f)
+      self.from_json(File.open(f, 'r:utf-8').read)
+    end
+
 
     # JSON representation
     class BibRepresenter < Representable::Decorator

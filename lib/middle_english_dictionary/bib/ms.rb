@@ -54,7 +54,6 @@ module MiddleEnglishDictionary
       property :pref
       property :cite
       property :lalme
-      property :xml
       property :title
     end
 
