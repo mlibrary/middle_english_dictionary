@@ -1,4 +1,9 @@
 require 'nokogiri'
+require_relative 'bib/ms'
+require_relative 'xml_utilities'
+require 'representable/json'
+
+
 
 # AUTHOR           0    1
 # COMMENT          0    1
@@ -29,14 +34,18 @@ module MiddleEnglishDictionary
     attr_accessor :author
 
     # Any number.
-    attr_accessor :comment, # might have internal tags
+    attr_accessor :id,
+                  :comment, # might have internal tags
                   :eedition, # Tag is E-EDITION; internal structure
                   :indexes, :indexbs, :indexcs,
                   :ipmeps,
                   :jolliffes,
                   :notes, # can contain a hyperbib stencil
                   :severs,
-                  :wells
+                  :wells,
+                  :author, # if present in AUTHOR tags
+                  :author_sort, # either SORT on <AUTHOR> or just the AUTHOR
+                  :hyps # HYP... ids
 
     # An MSLIST only contains MS (manuscript) tags, so well just store them
     attr_accessor :manuscripts
@@ -52,11 +61,20 @@ module MiddleEnglishDictionary
     def self.new_from_nokonode(nokonode)
 
       bib = self.new
+
       # First, verify that we've got something that looks like an entry
       raise "Node doesn't look like HYPERMED/ENTRY node" unless looks_like_an_entry_node(nokonode)
 
-      # nab the XML? At least for now
+      # It's a pain in the butt to deal with mixed content. Let's wrap
+      # problematic runs of tags so the XSLT is easier.
+
+      enclose_tagruns!(nokonode)
+
+      # nab the transformed
       bib.xml = nokonode.to_xml
+
+      # Get the ID
+      bib.id = nokonode.attr('ID')
 
       # Zero or 1 author
       bib.author = nokonode.xpath('AUTHOR').map(&:text).first
@@ -77,15 +95,89 @@ module MiddleEnglishDictionary
       bib.title_xml = nokonode.at('TITLE').inner_html # really  inner_xml in this case
       bib.title_text = nokonode.at('TITLE').text
 
+      # Author
+      authornode = nokonode.xpath('AUTHOR').first
+      if authornode
+        bib.author = authornode.text
+        bib.author_sort = authornode.attr('SORT') || bib.author
+      end
+
+      # Manuscripts
+      bib.manuscripts = nokonode.xpath('MSLIST/MS').map{|n| MiddleEnglishDictionary::Bib::MS.new(n)}
+
+      # Linktos
+      bib.hyps = nokonode.css('STENCIL').map{|x| x.attr('ID')}.compact.uniq
 
       bib
 
     end
 
 
+    def self.enclose_tagruns!(nokonode)
+      enc = '<stglist>'
+      nokonode.xpath('.//MSGROUP').each do |n|
+        MiddleEnglishDictionary::XMLUtilities.enclose_run_of_tags!(node: n, enclosing_node_string: enc, tagname: 'STG')
+      end
+
+      # Same with VARGROUP/VARIANT/SHORTSTENCIL
+      enc = '<shortstencillist>'
+      nokonode.xpath('.//VARGROUP/VARIANT').each do |n|
+        MiddleEnglishDictionary::XMLUtilities.enclose_run_of_tags!(node: n, enclosing_node_string: enc, tagname: 'SHORTSTENCIL')
+      end
+    end
+
+
     def self.looks_like_an_entry_node(nokonode)
       nokonode.name == 'ENTRY' and
           ['TITLE', 'STENCILLIST'] - nokonode.children.map(&:name) == []
+    end
+
+    # Provide a JSON representation of this object and all its sub-objects
+    # @return [String] json for this object
+    def to_json
+      BibRepresenter.new(self).to_json
+    end
+
+    # Re-hydrate
+    # @param [String] j Valid json as produced by #to_json
+    # @return [Entry] A re-hydrated entry
+    def self.from_json(j)
+      BibRepresenter.new(self.new).from_json(j)
+    end
+
+    # @param [String] f filename with Bib json in it
+    # @return [Entry] A re-hydrated Entry
+    def self.from_json_file(f)
+      self.from_json(File.open(f, 'r:utf-8').read)
+    end
+
+
+    # JSON representation
+    class BibRepresenter < Representable::Decorator
+      include Representable::JSON
+
+      property :id
+      property :comment
+      property :indexes
+      property :indexbs
+      property :indexcs
+
+      property :ipmeps
+      property :jolliffes
+      property :wells
+      property :severs
+
+      property :xml
+
+      property :author
+      property :author_sort
+      property :hyps
+
+      collection :manuscripts,
+                 decorator: MiddleEnglishDictionary::Bib::MSRepresenter,
+                 class: MiddleEnglishDictionary::Bib::MS
+
+
     end
 
 
