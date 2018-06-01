@@ -29,6 +29,7 @@ module MiddleEnglishDictionary
     # Exactly one
     attr_accessor :title_xml # internal tags
     attr_accessor :title_text
+    attr_writer :incipit
 
     # 0 or 1
     attr_accessor :author
@@ -94,6 +95,7 @@ module MiddleEnglishDictionary
       # Hang onto the title xml, since it can have internal tags
       bib.title_xml = nokonode.at('TITLE').inner_html # really  inner_xml in this case
       bib.title_text = nokonode.at('TITLE').text
+      bib.incipit = nokonode.at('TITLE').attr('TYPE') == 'INCIPIT'
 
       # Author
       authornode = nokonode.xpath('AUTHOR').first
@@ -112,6 +114,10 @@ module MiddleEnglishDictionary
 
     end
 
+
+    def incipit?
+      @incipit
+    end
 
     def self.enclose_tagruns!(nokonode)
       enc = '<stglist>'

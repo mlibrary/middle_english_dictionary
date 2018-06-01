@@ -9,7 +9,8 @@ module MiddleEnglishDictionary
                     :lalme_regions,
                     :title
 
-      def initialize(nokonode)
+      def initialize(nokonode = nil)
+        return unless nokonode
         @xml   = nokonode.to_xml
         @ref   = nokonode.attr('REF')
         @pref  = case nokonode.attr('PREF')
