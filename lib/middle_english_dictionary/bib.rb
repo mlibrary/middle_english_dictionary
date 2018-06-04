@@ -29,7 +29,7 @@ module MiddleEnglishDictionary
     # Exactly one
     attr_accessor :title_xml # internal tags
     attr_accessor :title_text
-    attr_writer :incipit
+    attr_accessor :incipit
 
     # 0 or 1
     attr_accessor :author
@@ -163,6 +163,7 @@ module MiddleEnglishDictionary
       include Representable::JSON
 
       property :id
+
       property :comment
       property :indexes
       property :indexbs
@@ -177,7 +178,12 @@ module MiddleEnglishDictionary
 
       property :author
       property :author_sort
+
       property :hyps
+
+      property :title_text
+      property :title_xml
+      property :incipit
 
       collection :manuscripts,
                  decorator: MiddleEnglishDictionary::Bib::MSRepresenter,
