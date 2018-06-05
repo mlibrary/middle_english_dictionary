@@ -7,7 +7,9 @@ module MiddleEnglishDictionary
                     :cite,
                     :lalme,
                     :lalme_regions,
-                    :title
+                    :title,
+                    :title_xml,
+                    :xml
 
       def initialize(nokonode = nil)
         return unless nokonode
@@ -56,6 +58,8 @@ module MiddleEnglishDictionary
       property :cite
       property :lalme
       property :title
+      property :title_xml
+      property :xml
     end
 
 

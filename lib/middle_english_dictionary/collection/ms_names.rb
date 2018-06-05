@@ -16,7 +16,8 @@ module MiddleEnglishDictionary
         nokonode.xpath('HYPERMED/MSLIB/MSFULL').each do |ms|
           code = ms.attr('MS')
           title = ms.text.strip
-          msnames[code] = MiddleEnglishDictionary::Bib::MSFull.new(code, title)
+          title_xml = ms.inner_html # actually XML
+          msnames[code] = MiddleEnglishDictionary::Bib::MSFull.new(code, title, title_xml)
         end
         msnames
       end
