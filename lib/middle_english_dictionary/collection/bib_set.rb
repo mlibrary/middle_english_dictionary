@@ -8,6 +8,7 @@ module MiddleEnglishDictionary
 
       include Enumerable
 
+
       def initialize(filename: nil, nokonode: nil)
         raise "Need to provide either a filename or a nokonode" unless filename or nokonode
 
@@ -22,6 +23,7 @@ module MiddleEnglishDictionary
 
         add_ms_full_titles!(nokonode)
       end
+
 
       def each
         return enum_for(:each) unless block_given?
@@ -38,6 +40,7 @@ module MiddleEnglishDictionary
         end
       end
 
+
       def [](k)
         @bibs[k]
       end
@@ -47,7 +50,8 @@ module MiddleEnglishDictionary
         names = MSNames.new_from_nokonode(nokonode)
         self.each do |b|
           b.manuscripts.each do |ms|
-            ms.title = names[ms.ref].title
+            ms.title     = names[ms.ref].title
+            ms.title_xml = names[ms.ref].title_xml
           end
         end
       end
