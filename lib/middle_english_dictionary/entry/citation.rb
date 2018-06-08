@@ -30,6 +30,14 @@ module MiddleEnglishDictionary
       def to_json
         CitationRepresenter.new(self).to_json
       end
+
+      # Re-hydrate
+      # @param [String] j Valid json as produced by #to_json
+      # @return [Entry] A re-hydrated citation
+      def self.from_json(j)
+        CitationRepresenter.new(self.new).from_json(j)
+      end
+
     end
 
     class CitationRepresenter < Representable::Decorator
