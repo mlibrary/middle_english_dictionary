@@ -5,9 +5,8 @@ module MiddleEnglishDictionary
       attr_accessor :ref,
                     :pref,
                     :cite,
-                    :lalme,
-                    :lalme_xml,
-                    :lalme_regions,
+                    :lalme, :lalme_xml,:lalme_regions,
+                    :laeme, :laeme_xml,:laeme_regions,
                     :title,
                     :title_xml,
                     :xml
@@ -37,6 +36,13 @@ module MiddleEnglishDictionary
           @lalme_xml = l.map(&:to_xml)
         end
         @lalme_regions = nokonode.xpath('LALME/REGION').map {|x| x.attr('EXPAN')}
+
+        l     = nokonode.xpath('LAEME')
+        if !l.empty?
+          @laeme     = l.map(&:text)
+          @laeme_xml = l.map(&:to_xml)
+        end
+        @laeme_regions = nokonode.xpath('LAEME/REGION').map {|x| x.attr('EXPAN')}
       end
 
 
@@ -61,8 +67,15 @@ module MiddleEnglishDictionary
       property :ref
       property :pref
       property :cite
+
       property :lalme
       property :lalme_xml
+      property :lalme_regions
+
+      property :laeme
+      property :laeme_xml
+      property :laeme_regions
+
       property :title
       property :title_xml
       property :xml
