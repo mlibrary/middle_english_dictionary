@@ -11,13 +11,14 @@ module MiddleEnglishDictionary
     class Stencil
 
       attr_accessor :rid, :date, :highlighted_phrases,
-                    :title, :ms, :entry_id, :notes, :xml
+                    :author,:title, :ms, :entry_id, :notes, :xml
 
       def self.new_from_nokonode(nokonode, entry_id: nil)
         stencil          = self.new
         stencil.entry_id = entry_id
         stencil.xml      = nokonode.to_xml
 
+        stencil.author              = nokonode.xpath('AUTHOR').map(&:text).first
         stencil.rid                 = nokonode.attr('RID')
         stencil.date                = nokonode.xpath('DATE').map(&:text).first
         stencil.highlighted_phrases = nokonode.css('HI').map(&:text).uniq
@@ -38,6 +39,7 @@ module MiddleEnglishDictionary
       property :rid
       property :date
       property :highlighted_phrases
+      property :author
       property :title
       property :ms
 
