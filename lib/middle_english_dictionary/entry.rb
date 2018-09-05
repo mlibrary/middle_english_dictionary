@@ -3,17 +3,42 @@ require 'nokogiri'
 require 'middle_english_dictionary/xml_utilities'
 require 'middle_english_dictionary/entry/orth'
 require 'middle_english_dictionary/entry/sense'
+require 'middle_english_dictionary/entry/sensegrp'
+require 'middle_english_dictionary/entry/note'
 require 'middle_english_dictionary/entry/supplement'
 require 'middle_english_dictionary/external_dictionary_link'
 require 'representable/json'
 
 module MiddleEnglishDictionary
 
-  # For notes, we'll just store the xml and the text and not worry about it
-  Note = Struct.new(:xml, :text)
+
 
   class Entry
 
+    module SenseStuffHierarchy
+
+      # A recursive mechanism to fill teh "sensestuff" in the SENSE(GRP)
+      # section
+      #
+      def self.sense_hierarchy(entry_id, nokonode)
+        nokonode.xpath(ENTRY_XPATHS[:sense_stuff]).map do |n|
+          case n.name
+          when "SENSEGRP"
+            SenseGrp.new_from_nokonode(n, entry_id: entry_id)
+          when "SENSE"
+            Sense.new_from_nokonode(n, entry_id: entry_id)
+          when "NOTE"
+            Note.new_from_nokonode(n, entry_id: entry_id)
+          when 'SUPPLEMENT'
+            Supplement.new_from_nokonode(n, entry_id: entry_id)
+          else
+            raise "Shouldn't be getting a #{n.name} in sensestuff array"
+          end
+        end
+      end
+    end
+
+    # extend MiddleEnglishDictionary::Entry::SenseStuff
     extend Entry::ClassMethods
     ROOT_XPATHS = {
       entry: '/MED/ENTRYFREE',
@@ -26,7 +51,10 @@ module MiddleEnglishDictionary
       pos:            'FORM/POS',
       etym:           'ETYM',
       etym_languages: 'ETYM/LANG/LG/@EXPAN',
-      sense:          'SENSE'
+      sense:          'SENSE',
+      sense_anywhere: '//SENSE',
+      sensegrp:       'SENSEGRP',
+      sense_stuff:    'SENSE|SENSEGRP|NOTE|SUPPLEMENT'
     }.freeze
 
 
@@ -46,6 +74,14 @@ module MiddleEnglishDictionary
     attr_accessor :supplements
     attr_accessor :oedlinks
     attr_accessor :doelinks
+
+    # The "right" way to do this with Representable is...well, I'm not sure
+    # what it is. I'm just going to recreate it from the raw XML every time
+    # I read it, because while it's strikingly inefficient and makes me want
+    # to shower, it'll work and it's good enough for now. See
+    # def sensestuff, below
+
+    attr_accessor :sensestuff
 
     def self.new_from_nokonode(root_nokonode, source: nil)
       MiddleEnglishDictionary::XMLUtilities.case_raise_all_tags!(root_nokonode)
@@ -73,12 +109,20 @@ module MiddleEnglishDictionary
       entry.pos = entry_nokonode.at(ENTRY_XPATHS[:pos]).text
       entry.pos_facet = entry_nokonode.xpath(ENTRY_XPATHS[:pos_facet]).map(&:value)
 
-      entry.senses      = entry_nokonode.xpath('SENSE').map {|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
+      entry.senses      = entry_nokonode.xpath(ENTRY_XPATHS[:sense_anywhere]).map {|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
       entry.supplements = entry_nokonode.xpath('SUPPLEMENT').map {|supp| Supplement.new_from_nokonode(supp, entry_id: entry.id)}
 
       entry.notes = entry_nokonode.xpath('NOTE').map(&:text).map {|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
+
+      # We want a set of all the sensegrp / sense / note stuff in one list, so they can be
+      # displayed in order using XSLT. The data are *not* consistent enough to be able
+      # to do it programmatically in a straightforward way.
+      #
+
+      entry.sensestuff = SenseStuffHierarchy.sense_hierarchy(entry.id, entry_nokonode)
       entry
     end
+
 
     # for easier debugging
     # @return [String] Nicely formatted XML of the whole entry
@@ -192,6 +236,12 @@ module MiddleEnglishDictionary
   class EntryRepresenter < Representable::Decorator
     include Representable::JSON
 
+
+    DECORATOR_FOR_CLASS = ->(klass) do
+      Kernel.const_get(klass.to_s + 'Representer')
+    end
+
+
     property :id
     property :source
     property :sequence
@@ -212,5 +262,19 @@ module MiddleEnglishDictionary
     collection :orths, decorator: Entry::OrthRepresenter, class: Entry::Orth
     collection :senses, decorator: Entry::SenseRepresenter, class: Entry::Sense
     collection :supplements, decorator: Entry::SupplementRepresenter, class: Entry::Supplement
+
+    # Representable is weird in that it doesn't support mixed-class arrays
+    # in an easy way. Here, we choose the decorator based on the class + 'Representer',
+    # and the parsed-into class based on the stored 'objclass' property of
+    # the json representation
+    collection :sensestuff,
+               decorator: ->(options) { DECORATOR_FOR_CLASS.(options[:input].class)},
+               class: ->(options) do
+                 begin
+                   Kernel.const_get options[:fragment]["objclass"]
+                 rescue => e
+                   require 'pry'; binding.pry
+                 end
+               end
   end
 end

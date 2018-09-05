@@ -22,6 +22,8 @@ module MiddleEnglishDictionary
     class SupplementRepresenter < Representable::Decorator
       include Representable::JSON
 
+      property :objclass, getter: ->(represented:, **) {represented.class.to_s}, skip_parse: true
+
       property :entry_id
       property :xml
       property :notes
