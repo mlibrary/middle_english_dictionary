@@ -9,7 +9,8 @@ module MiddleEnglishDictionary
 
       attr_accessor :xml, :definition_xml, :definition_text,
                     :discipline_usages, :grammatical_usages,
-                    :egs, :sense_number, :entry_id, :notes
+                    :egs, :sense_number, :entry_id, :notes,
+                    :sensegrp_number, :sensestuff
 
 
       def self.new_from_nokonode(nokonode, entry_id: nil)
@@ -27,6 +28,12 @@ module MiddleEnglishDictionary
 
         sense.notes = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
 
+        # We'll make a list of all the "sense" things (stuff that appears within a SENSE or
+        # SENSEGRP) so we can provide them to the display in the correct order.
+        #
+        sense.sensestuff = SenseStuffHierarchy.sense_hierarchy(entry_id, nokonode)
+
+
         sense
       end
 
@@ -39,10 +46,19 @@ module MiddleEnglishDictionary
     class SenseRepresenter < Representable::Decorator
       include Representable::JSON
 
+      # Representable is weird in that it doesn't support mixed-class arrays
+      # in an easy way. Have to do some messing around, including storing the
+      # class of the object in the representation (json, in our case). It's
+      # ignored (via `skip_class`) when parsing back into an object from the
+      # json.
+
+      property :objclass, getter: ->(represented:, **) {represented.class.to_s}, skip_parse: true
+
       property :entry_id
       property :definition_xml
       property :definition_text
       property :sense_number
+      property :sensegrp_number
       property :discipline_usages
       collection :egs, decorator: EGRepresenter, class: EG
       property :notes
