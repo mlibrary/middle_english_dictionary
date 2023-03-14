@@ -3,13 +3,12 @@ module MiddleEnglishDictionary
     class HashArray
       include Enumerable
 
-
       def initialize(&blk)
         @h = {}
-        if block_given?
-          self.instance_eval &blk
+        if blk
+          instance_eval(&blk) # rubocop:disable Lint/Void
         end
-        self
+        self # rubocop:disable Lint/Void
       end
 
       def keys
@@ -26,12 +25,12 @@ module MiddleEnglishDictionary
 
       def each
         return enum_for(:each) unless block_given?
-        @h.values.each {|v| yield v}
+        @h.values.each { |v| yield v }
       end
 
       def each_pair
         return enum_for(:each_pair) unless block_given?
-        @h.each_pair {|k,v| yield [k,v]}
+        @h.each_pair { |k, v| yield [k, v] }
       end
     end
   end

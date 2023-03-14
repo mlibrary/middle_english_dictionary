@@ -1,18 +1,17 @@
-require 'middle_english_dictionary/entry/class_methods'
-require 'representable/json'
+require "middle_english_dictionary/entry/class_methods"
+require "representable/json"
 
 module MiddleEnglishDictionary
   class Entry
     class Orth
-
       extend Entry::ClassMethods
 
       attr_accessor :regs, :origs, :entry_id, :notes
 
       def initialize(regs: [], origs: [], entry_id: nil, notes: [])
         @entry_id = entry_id
-        @regs     = regs
-        @origs    = origs
+        @regs = regs
+        @origs = origs
       end
 
       def all_forms
@@ -20,12 +19,11 @@ module MiddleEnglishDictionary
       end
 
       def self.new_from_nokonode(nokonode, entry_id: nil)
-        regs  = nokonode.xpath('REG').map(&:text)
-        origs = nokonode.xpath('ORIG').map(&:text)
-        notes = nokonode.xpath('NOTE').map(&:text).map{|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
-        self.new(regs: regs, origs: origs, entry_id: entry_id, notes: notes)
+        regs = nokonode.xpath("REG").map(&:text)
+        origs = nokonode.xpath("ORIG").map(&:text)
+        notes = nokonode.xpath("NOTE").map(&:text).map { |x| x.gsub(/[\s\n]+/, " ") }.map(&:strip)
+        new(regs: regs, origs: origs, entry_id: entry_id, notes: notes)
       end
-
     end
 
     class OrthRepresenter < Representable::Decorator
@@ -35,8 +33,6 @@ module MiddleEnglishDictionary
       property :regs
       property :origs
       property :notes
-
     end
-
   end
 end

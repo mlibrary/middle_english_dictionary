@@ -1,22 +1,17 @@
-require 'middle_english_dictionary/entry/class_methods'
-require 'nokogiri'
-require 'middle_english_dictionary/xml_utilities'
-require 'middle_english_dictionary/entry/orth'
-require 'middle_english_dictionary/entry/sense'
-require 'middle_english_dictionary/entry/sensegrp'
-require 'middle_english_dictionary/entry/note'
-require 'middle_english_dictionary/entry/supplement'
-require 'middle_english_dictionary/external_dictionary_link'
-require 'representable/json'
+require "middle_english_dictionary/entry/class_methods"
+require "nokogiri"
+require "middle_english_dictionary/xml_utilities"
+require "middle_english_dictionary/entry/orth"
+require "middle_english_dictionary/entry/sense"
+require "middle_english_dictionary/entry/sensegrp"
+require "middle_english_dictionary/entry/note"
+require "middle_english_dictionary/entry/supplement"
+require "middle_english_dictionary/external_dictionary_link"
+require "representable/json"
 
 module MiddleEnglishDictionary
-
-
-
   class Entry
-
     module SenseStuffHierarchy
-
       # A recursive mechanism to fill teh "sensestuff" in the SENSE(GRP)
       # section
       #
@@ -29,7 +24,7 @@ module MiddleEnglishDictionary
             Sense.new_from_nokonode(n, entry_id: entry_id)
           when "NOTE"
             Note.new_from_nokonode(n, entry_id: entry_id)
-          when 'SUPPLEMENT'
+          when "SUPPLEMENT"
             Supplement.new_from_nokonode(n, entry_id: entry_id)
           else
             raise "Shouldn't be getting a #{n.name} in sensestuff array"
@@ -41,22 +36,21 @@ module MiddleEnglishDictionary
     # extend MiddleEnglishDictionary::Entry::SenseStuff
     extend Entry::ClassMethods
     ROOT_XPATHS = {
-      entry: '/MED/ENTRYFREE',
+      entry: "/MED/ENTRYFREE"
     }.freeze
 
     ENTRY_XPATHS = {
-      hdorth:         'FORM/HDORTH',
-      other_orth:     'FORM/ORTH',
-      pos_facet:      'FORM/POS/PS/@EXPAN',
-      pos:            'FORM/POS',
-      etym:           'ETYM',
-      etym_languages: 'ETYM/LANG/LG/@EXPAN',
-      sense:          'SENSE',
-      sense_anywhere: '//SENSE',
-      sensegrp:       'SENSEGRP',
-      sense_stuff:    'SENSE|SENSEGRP|NOTE|SUPPLEMENT'
+      hdorth: "FORM/HDORTH",
+      other_orth: "FORM/ORTH",
+      pos_facet: "FORM/POS/PS/@EXPAN",
+      pos: "FORM/POS",
+      etym: "ETYM",
+      etym_languages: "ETYM/LANG/LG/@EXPAN",
+      sense: "SENSE",
+      sense_anywhere: "//SENSE",
+      sensegrp: "SENSEGRP",
+      sense_stuff: "SENSE|SENSEGRP|NOTE|SUPPLEMENT"
     }.freeze
-
 
     attr_accessor :headwords
     attr_accessor :source
@@ -88,31 +82,30 @@ module MiddleEnglishDictionary
 
       entry_nokonode = root_nokonode.at(ROOT_XPATHS[:entry])
 
-      entry        = self.new
+      entry = new
       entry.source = source ? Pathname.new(source).basename : :io
-      entry.xml    = entry_nokonode.to_xml
+      entry.xml = entry_nokonode.to_xml
 
-      entry.id       = entry_nokonode.attr('ID')
-      entry.sequence = entry_nokonode.attr('SEQ').to_i
+      entry.id = entry_nokonode.attr("ID")
+      entry.sequence = entry_nokonode.attr("SEQ").to_i
 
       entry.headwords = entry.derive_headwords(entry_nokonode)
-      entry.orths     = entry.derive_orths(entry_nokonode)
+      entry.orths = entry.derive_orths(entry_nokonode)
 
-      if etym_node = entry_nokonode.at(ENTRY_XPATHS[:etym])
-        entry.etym_xml  = etym_node.to_xml
+      if (etym_node = entry_nokonode.at(ENTRY_XPATHS[:etym]))
+        entry.etym_xml = etym_node.to_xml
         entry.etym_text = etym_node.text
       end
-
 
       entry.etym_languages = entry_nokonode.xpath(ENTRY_XPATHS[:etym_languages]).map(&:value)
 
       entry.pos = entry_nokonode.at(ENTRY_XPATHS[:pos]).text
       entry.pos_facet = entry_nokonode.xpath(ENTRY_XPATHS[:pos_facet]).map(&:value)
 
-      entry.senses      = entry_nokonode.xpath(ENTRY_XPATHS[:sense_anywhere]).map {|sense| Sense.new_from_nokonode(sense, entry_id: entry.id)}
-      entry.supplements = entry_nokonode.xpath('SUPPLEMENT').map {|supp| Supplement.new_from_nokonode(supp, entry_id: entry.id)}
+      entry.senses = entry_nokonode.xpath(ENTRY_XPATHS[:sense_anywhere]).map { |sense| Sense.new_from_nokonode(sense, entry_id: entry.id) }
+      entry.supplements = entry_nokonode.xpath("SUPPLEMENT").map { |supp| Supplement.new_from_nokonode(supp, entry_id: entry.id) }
 
-      entry.notes = entry_nokonode.xpath('NOTE').map(&:text).map {|x| x.gsub(/[\s\n]+/, ' ')}.map(&:strip)
+      entry.notes = entry_nokonode.xpath("NOTE").map(&:text).map { |x| x.gsub(/[\s\n]+/, " ") }.map(&:strip)
 
       # We want a set of all the sensegrp / sense / note stuff in one list, so they can be
       # displayed in order using XSLT. The data are *not* consistent enough to be able
@@ -122,7 +115,6 @@ module MiddleEnglishDictionary
       entry.sensestuff = SenseStuffHierarchy.sense_hierarchy(entry.id, entry_nokonode)
       entry
     end
-
 
     # for easier debugging
     # @return [String] Nicely formatted XML of the whole entry
@@ -170,7 +162,6 @@ module MiddleEnglishDictionary
       regularized_headwords.concat(regularized_orths).uniq
     end
 
-
     # @return [Array<String>] All given spellings (original and regular) of the entry
     def all_forms
       all_original_forms.concat(all_regularized_forms).uniq
@@ -178,14 +169,13 @@ module MiddleEnglishDictionary
 
     # @private
     def derive_headwords(entry_nokonode)
-      entry_nokonode.xpath(ENTRY_XPATHS[:hdorth]).map {|w| Entry::Orth.new_from_nokonode(w, entry_id: id)}
+      entry_nokonode.xpath(ENTRY_XPATHS[:hdorth]).map { |w| Entry::Orth.new_from_nokonode(w, entry_id: id) }
     end
 
     # @private
     def derive_orths(entry_nokonode)
-      entry_nokonode.xpath(ENTRY_XPATHS[:other_orth]).map {|w| Entry::Orth.new_from_nokonode(w, entry_id: id)}
+      entry_nokonode.xpath(ENTRY_XPATHS[:other_orth]).map { |w| Entry::Orth.new_from_nokonode(w, entry_id: id) }
     end
-
 
     # Citations from the sense(s) and the supplement(s)
     # @return [Array<Citation>] All the citations in the entry, from senses AND supplements
@@ -220,15 +210,14 @@ module MiddleEnglishDictionary
     # @param [String] j Valid json as produced by #to_json
     # @return [Entry] A re-hydrated entry
     def self.from_json(j)
-      EntryRepresenter.new(self.new).from_json(j)
+      EntryRepresenter.new(new).from_json(j)
     end
 
     # @param [String] f filename with Entry json in it
     # @return [Entry] A re-hydrated Entry
     def self.from_json_file(f)
-      self.from_json(File.open(f, 'r:utf-8').read)
+      from_json(File.open(f, "r:utf-8").read)
     end
-
   end
 
   # Utility class to provide facilities to round trip between Entry
@@ -236,11 +225,9 @@ module MiddleEnglishDictionary
   class EntryRepresenter < Representable::Decorator
     include Representable::JSON
 
-
     DECORATOR_FOR_CLASS = ->(klass) do
-      Kernel.const_get(klass.to_s + 'Representer')
+      Kernel.const_get(klass.to_s + "Representer")
     end
-
 
     property :id
     property :source
@@ -268,13 +255,14 @@ module MiddleEnglishDictionary
     # and the parsed-into class based on the stored 'objclass' property of
     # the json representation
     collection :sensestuff,
-               decorator: ->(options) { DECORATOR_FOR_CLASS.(options[:input].class)},
-               class: ->(options) do
-                 begin
-                   Kernel.const_get options[:fragment]["objclass"]
-                 rescue => e
-                   require 'pry'; binding.pry
-                 end
-               end
+      decorator: ->(options) { DECORATOR_FOR_CLASS.call(options[:input].class) },
+      class: ->(options) do
+        begin
+          Kernel.const_get options[:fragment]["objclass"]
+        rescue => e
+          require "pry"
+          binding.pry # rubocop:disable Lint/Debugger
+        end
+      end
   end
 end

@@ -1,0 +1,18 @@
+---
+services:
+  app:
+    image: middle_english_dictionary
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "1234:1234" # RubyMine
+      - "26162:26162" # RubyMine
+    volumes:
+      - .:/opt/app
+      - gems:/var/opt/app/gems
+    command:
+      - "sleep"
+      - "infinity"
+volumes:
+  gems:
