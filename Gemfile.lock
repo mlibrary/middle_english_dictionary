@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    middle_english_dictionary (1.8.0)
+    middle_english_dictionary (1.8.1)
       multi_json
       nokogiri
       representable
@@ -18,6 +18,8 @@ GEM
     method_source (1.0.0)
     multi_json (1.15.0)
     nokogiri (1.14.2-aarch64-linux)
+      racc (~> 1.4)
+    nokogiri (1.14.2-x86_64-linux)
       racc (~> 1.4)
     parallel (1.22.1)
     parser (3.2.1.1)
