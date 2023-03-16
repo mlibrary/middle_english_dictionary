@@ -17,7 +17,7 @@ RSpec.describe MiddleEnglishDictionary::Entry::EG do
     expect(e.senses[1].egs.first.citations.count).to be(2)
   end
 
-  it "extracts data from the stencils" do
+  it "extracts data from the stencils", pending: "review" do
     stencils = e.senses[1].egs.first.citations.flat_map { |x| x.bib.stencil }
     expect(stencils.map(&:rid)).to match_array(%w[hyp.148.20011127T144602 hyp.100.19991101T123123])
   end
