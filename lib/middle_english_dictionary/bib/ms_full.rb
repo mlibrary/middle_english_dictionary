@@ -5,10 +5,9 @@ module MiddleEnglishDictionary
 
       def initialize(code = nil, title = nil, title_xml = nil)
         @code = code
-        @title  = title
+        @title = title
         @title_xml = title_xml
       end
     end
-
   end
 end

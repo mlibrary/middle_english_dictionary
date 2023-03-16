@@ -1,6 +1,6 @@
-require 'nokogiri'
-require 'representable/json'
-require 'middle_english_dictionary/utilities'
+require "nokogiri"
+require "representable/json"
+require "middle_english_dictionary/utilities"
 
 ##
 #
@@ -13,25 +13,23 @@ require 'middle_english_dictionary/utilities'
 ##
 
 module MiddleEnglishDictionary
-
   LinkTarget = Struct.new(:med_id, :target_id, :term)
 
   class ExternalDictionaryLink
-
     include Enumerable
 
     attr_accessor :targets, :normalized_term
     attr_reader :med_id
 
     def initialize(med_id: nil, normalized_term: nil)
-      @med_id          = med_id if med_id
+      @med_id = med_id if med_id
       @normalized_term = normalized_term if normalized_term
-      @targets         = []
+      @targets = []
     end
 
     def each
       return enum_for :each unless block_given?
-      @targets.each {|x| yield x}
+      @targets.each { |x| yield x }
     end
 
     def med_id=(raw_val)
@@ -39,13 +37,13 @@ module MiddleEnglishDictionary
     end
 
     def add_valid_terms!(ids_string:, terms: [])
-      ids = ids_string.split('#').map(&:strip)
+      ids = ids_string.split("#").map(&:strip)
 
       return if terms.empty?
       return if ids.empty?
 
       ids.zip(terms).each do |id, term|
-        next if id =~ /---/
+        next if /---/.match?(id)
         @targets << LinkTarget.new(med_id, id, term)
       end
 

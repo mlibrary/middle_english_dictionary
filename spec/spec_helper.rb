@@ -13,5 +13,5 @@ RSpec.configure do |config|
   end
 end
 
-require 'pathname'
-SPEC_DATA = Pathname.new(__dir__) + 'data'
+require "pathname"
+SPEC_DATA = Pathname.new(__dir__) + "data"
