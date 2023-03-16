@@ -8,7 +8,7 @@ module MiddleEnglishDictionary
         if blk
           instance_eval(&blk)
         end
-        self
+        self # rubocop:disable Lint/Void
       end
 
       def keys

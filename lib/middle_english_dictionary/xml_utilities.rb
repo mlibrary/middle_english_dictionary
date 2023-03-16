@@ -45,7 +45,7 @@ module MiddleEnglishDictionary
       PrettyXSL.apply_to(Nokogiri::XML(xml)).to_s
     end
 
-    PrettyXSLSS = <<~EOXSL
+    PrettyXSLSS = <<~EOXSL # rubocop:disable Naming/ConstantName
       <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
         <xsl:output method="xml" indent="yes" omit-xml-declaration="yes" encoding="UTF-8"/>
         <xsl:param name="indent-increment" select="'   '"/>

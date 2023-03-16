@@ -4,7 +4,7 @@ module MiddleEnglishDictionary
   class Entry
     module ClassMethods
       def new_from_xml(xml, source: nil)
-        node = Nokogiri::XML(xml) { |conf| conf.strict }
+        _node = Nokogiri::XML(xml) { |conf| conf.strict }
         new_from_nokonode(Nokogiri::XML(xml), source: source)
       rescue Nokogiri::XML::SyntaxError => e
         raise MiddleEnglishDictionary::InvalidXML.new("Invalid XML in #{source}: #{e.message}")

@@ -92,7 +92,7 @@ module MiddleEnglishDictionary
       entry.headwords = entry.derive_headwords(entry_nokonode)
       entry.orths = entry.derive_orths(entry_nokonode)
 
-      if etym_node = entry_nokonode.at(ENTRY_XPATHS[:etym])
+      if (etym_node = entry_nokonode.at(ENTRY_XPATHS[:etym]))
         entry.etym_xml = etym_node.to_xml
         entry.etym_text = etym_node.text
       end

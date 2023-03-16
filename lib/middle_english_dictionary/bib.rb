@@ -28,7 +28,7 @@ module MiddleEnglishDictionary
     attr_accessor :incipit
 
     # 0 or 1
-    attr_accessor :author
+    # attr_accessor :author
 
     # Any number.
     attr_accessor :id,
